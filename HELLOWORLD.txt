@@ -3,3 +3,9 @@ Push Test 1
 ashley is gay
 ZT STOOPID
 zp test
+
+Class WeCanDoGitRight
+{
+	public void Right()
+	{}
+}
