@@ -6,6 +6,10 @@ https://flutter.dev/docs/get-started/install/windows
 
 Please follow the instructions up to <Android setup>
 
+From there on, open android studio and install the Dart and Flutter plugin
+- Close project first, file -> close project
+- On the <Welcome to Android Studio> page, go to plugins, and search for the aforementioned
+
 Take note that the project folder <SoCyc> has an internal folder of <so_cyc>
 - The root project folder <SoCyc> represents the flutter project
 	- Dart code stored in SoCyc\so_cyc\lib
