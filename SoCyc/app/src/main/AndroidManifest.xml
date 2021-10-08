@@ -40,6 +40,8 @@
                 android:value="AIzaSyCUq5GqWPFH7Q9NQIbp9tYrhutAhVFxKg8" />
 
         </activity>
+        <activity android:name=".MainActivity"/>
+
     </application>
 
 </manifest>
