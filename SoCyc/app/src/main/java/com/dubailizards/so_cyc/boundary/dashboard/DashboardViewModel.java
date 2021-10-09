@@ -1,16 +1,16 @@
-package com.dubailizards.so_cyc.ui.profile;
+package com.dubailizards.so_cyc.boundary.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
+public class DashboardViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ProfileViewModel() {
+    public DashboardViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Profile fragment");
+        mText.setValue("This is Dashboard fragment");
     }
 
     public LiveData<String> getText() {

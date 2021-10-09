@@ -1,4 +1,4 @@
-package com.dubailizards.so_cyc.ui.profile;
+package com.dubailizards.so_cyc.boundary.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,11 +14,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dubailizards.so_cyc.databinding.FragmentProfileBinding;
 
+/**
+ *  Boundary Class, Fragment of the BaseActivity UI that represents the Profile Screen
+ *  Displays the user's profile details and enables logout
+ */
 public class ProfileFragment extends Fragment {
 
+    /**
+     *  private ProfileViewModel variable
+     *  Object that holds logical code relating to this fragment
+     */
     private ProfileViewModel profileViewModel;
+
+    /**
+     *  private FragmentProfileBinding variable
+     *  Auto generated class type that represents the binding between XML layout file and data objects
+     */
     private FragmentProfileBinding binding;
 
+    /**
+     *  protected void function, Overridden Constructor of a Fragment
+     *  Initializes the Fragment, and sets up necessary parameters
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
@@ -37,6 +54,10 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
+    /**
+     *  protected void function, Overridden Destructor of a Fragment
+     *  Terminates the Fragment, deallocating variables accordingly
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
