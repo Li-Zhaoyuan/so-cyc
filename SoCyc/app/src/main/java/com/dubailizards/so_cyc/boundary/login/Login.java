@@ -1,4 +1,4 @@
-package com.dubailizards.so_cyc.ui.login;
+package com.dubailizards.so_cyc.boundary.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.dubailizards.so_cyc.MainActivity;
+import com.dubailizards.so_cyc.boundary.BaseActivity;
+import com.dubailizards.so_cyc.boundary.MainActivity;
 import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.TestingActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,16 +31,13 @@ public class Login extends AppCompatActivity {
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
 
-    // (DEBUG) Button to skip login
-    Button Btn_SkipLogin;
-
     @Override
     protected void onStart() {
         super.onStart();
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), Profile.class); // TODO: Change this to BaseActivity, once logout can be done from there
             startActivity(intent);
         }
     }
@@ -60,22 +59,41 @@ public class Login extends AppCompatActivity {
         });
 
         // Find my skip button
-        Btn_SkipLogin = findViewById(R.id.skip_login);
+        Button Btn_SkipLogin = findViewById(R.id.skip_login);
         // Link this button with a listener to transit screens if clicked
         Btn_SkipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivities();
+                SwitchActivities(1);
+            }
+        });
+
+        // Find my map test button
+        Button Btn_MapTest = findViewById(R.id.map_test);
+        // Link this button with a listener to transit screens if clicked
+        Btn_MapTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivities(0);
             }
         });
     }
 
     /**
-     * A private void function.
+     * A private void function, for debug purposes
+     * @param selection is the screen transition choice
      * Transits the current activity to the MainActivity Class
      */
-    private void SwitchActivities() {
-        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+    private void SwitchActivities(int selection) {
+        Intent switchActivityIntent;
+        switch(selection){
+            case 1:
+                switchActivityIntent = new Intent(this, BaseActivity.class);
+                break;
+            default:
+                switchActivityIntent = new Intent(this, TestingActivity.class);
+                break;
+        }
         startActivity(switchActivityIntent);
     }
 

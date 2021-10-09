@@ -1,4 +1,4 @@
-package com.dubailizards.so_cyc.ui.dashboard;
+package com.dubailizards.so_cyc.boundary.dashboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,11 +14,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
 
+/**
+ *  Boundary Class, Fragment of the BaseActivity UI that represents the Dashboard
+ *  Displays interactive UI elements in regards to events
+ */
 public class DashboardFragment extends Fragment {
 
+    /**
+     *  private DashboardViewModel variable
+     *  Object that holds logical code relating to this fragment
+     */
     private DashboardViewModel dashboardViewModel;
+
+    /**
+     *  private FragmentDashboardBinding variable
+     *  Auto generated class type that represents the binding between XML layout file and data objects
+     */
     private FragmentDashboardBinding binding;
 
+    /**
+     *  protected void function, Overridden Constructor of a Fragment
+     *  Initializes the Fragment, and sets up necessary parameters
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -37,6 +54,10 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
+    /**
+     *  protected void function, Overridden Destructor of a Fragment
+     *  Terminates the Fragment, deallocating variables accordingly
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -1,16 +1,16 @@
-package com.dubailizards.so_cyc.ui.dashboard;
+package com.dubailizards.so_cyc.boundary.navigation;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class NavigationViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public NavigationViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Dashboard fragment");
+        mText.setValue("This is Navigation fragment");
     }
 
     public LiveData<String> getText() {
