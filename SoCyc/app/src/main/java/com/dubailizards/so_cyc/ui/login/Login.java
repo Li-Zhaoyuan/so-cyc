@@ -3,6 +3,7 @@ package com.dubailizards.so_cyc.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,9 @@ public class Login extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
+
+    // (DEBUG) Button to skip login
+    Button Btn_SkipLogin;
 
     @Override
     protected void onStart() {
@@ -54,6 +58,25 @@ public class Login extends AppCompatActivity {
                 signIn();
             }
         });
+
+        // Find my skip button
+        Btn_SkipLogin = findViewById(R.id.skip_login);
+        // Link this button with a listener to transit screens if clicked
+        Btn_SkipLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivities();
+            }
+        });
+    }
+
+    /**
+     * A private void function.
+     * Transits the current activity to the MainActivity Class
+     */
+    private void SwitchActivities() {
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
     }
 
     private void createRequest() {
