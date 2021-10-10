@@ -1,4 +1,4 @@
-package com.dubailizards.so_cyc.ui.login;
+package com.dubailizards.so_cyc.boundary.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 
+// TODO: Move the logical code of this profile screen into the profile fragment
 public class Profile extends AppCompatActivity {
     ImageView picture;
     TextView name, mail;

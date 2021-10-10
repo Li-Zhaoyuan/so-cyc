@@ -1,4 +1,4 @@
-package com.dubailizards.so_cyc.ui.navigation;
+package com.dubailizards.so_cyc.boundary.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,11 +14,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dubailizards.so_cyc.databinding.FragmentNavigationBinding;
 
+/**
+ *  Boundary Class, Fragment of the BaseActivity UI that represents the Navigation Screen
+ *  Displays interactive map making use of Google Maps
+ */
 public class NavigationFragment extends Fragment {
 
+    /**
+     *  private NavigationViewModel variable
+     *  Object that holds logical code relating to this fragment
+     */
     private NavigationViewModel navigationViewModel;
+
+    /**
+     *  private FragmentNavigationBinding variable
+     *  Auto generated class type that represents the binding between XML layout file and data objects
+     */
     private FragmentNavigationBinding binding;
 
+    /**
+     *  protected void function, Overridden Constructor of a Fragment
+     *  Initializes the Fragment, and sets up necessary parameters
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         navigationViewModel =
@@ -37,6 +54,10 @@ public class NavigationFragment extends Fragment {
         return root;
     }
 
+    /**
+     *  protected void function, Overridden Destructor of a Fragment
+     *  Terminates the Fragment, deallocating variables accordingly
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
