@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 
 import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.control.APIManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +29,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.dubailizards.so_cyc.databinding.ActivityTestingBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.io.InputStream;
 
 public class TestingActivity extends AppCompatActivity implements OnMapReadyCallback {
 
