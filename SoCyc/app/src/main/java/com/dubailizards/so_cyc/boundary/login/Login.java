@@ -31,6 +31,10 @@ public class Login extends AppCompatActivity {
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
 
+    /**
+     *  A method of Login class
+     *  Check to see if the user is currently signed in
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -42,6 +46,10 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    /**
+     *  A method of Login class
+     *  onCreate method, get the shared instance of the FirebaseAuth object
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +105,10 @@ public class Login extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
+    /**
+     *  A method of Login class
+     *  Integrating Google Sign-In and configure of GoogleSignInOptions object.
+     */
     private void createRequest() {
 
         // Configure Google Sign In
@@ -109,12 +121,20 @@ public class Login extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    /**
+     *  A method of Login class
+     *  Ensure GoogleSignInClient is always sign out, get new signInIntent.
+     */
     private void signIn() {
         mGoogleSignInClient.signOut();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     *  A method of Login class
+     *  Pass the server's client ID to the requestIdToken method. To find the OAuth 2.0 client ID.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -133,6 +153,11 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    /**
+     *  A method of Login class
+     *  After user successfully signs in, get an ID token from the GoogleSignInAccount object.
+     *  Exchange it for a Firebase credential, and authenticate with Firebase using the Firebase credential.
+     */
     private void firebaseAuthWithGoogle(String idToken) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
