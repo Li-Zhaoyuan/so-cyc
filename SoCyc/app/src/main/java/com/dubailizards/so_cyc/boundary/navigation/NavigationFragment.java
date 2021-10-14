@@ -12,7 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.databinding.FragmentNavigationBinding;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Navigation Screen
@@ -38,20 +45,57 @@ public class NavigationFragment extends Fragment {
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        navigationViewModel =
-                new ViewModelProvider(this).get(NavigationViewModel.class);
 
-        binding = FragmentNavigationBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        //Initialize view
+        View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-        final TextView textView = binding.textNavigation;
-        navigationViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        //Initialize map fragment
+        SupportMapFragment supportMapFragment = (SupportMapFragment)
+                getChildFragmentManager().findFragmentById(R.id.google_map);
+
+        //Async map
+        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onMapReady(GoogleMap googleMap) {
+                //When map is loaded
+                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
+                    @Override
+                    public void onMapClick(LatLng latLng){
+                        //When clicked on map
+                        //Initialize marker options
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        //Set position of marker
+                        markerOptions.position(latLng);
+                        //Remove all marker
+                        googleMap.clear();
+                        //Animating to zoom the marker
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                latLng,10
+                        ));
+                        //Add marker on map
+                        googleMap.addMarker(markerOptions);
+                    }
+                });
             }
         });
-        return root;
+
+        //Return view
+        return view;
+
+//                navigationViewModel =
+//                new ViewModelProvider(this).get(NavigationViewModel.class);
+//
+//      binding = FragmentNavigationBinding.inflate(inflater, container, false);
+//        View root = binding.getRoot();
+//
+//        final TextView textView = binding.textNavigation;
+//        navigationViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
+//        return root;
     }
 
     /**
