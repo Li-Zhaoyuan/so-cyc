@@ -80,6 +80,16 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
+     *  protected void function, Overridden Destructor of a Fragment
+     *  Terminates the Fragment, deallocating variables accordingly
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    /**
      *  private void function, Setup UI Entities
      *  @param view is the view where the entities are stored in
      *  Sets up UI entities by finding them from the fragment's view
@@ -108,7 +118,7 @@ public class ProfileFragment extends Fragment {
 
     /**
      *  private void function, Gets User Profile Details
-     *  @param account is the last signed in google account
+     *  @param account is user's account
      *  Makes use of google sign in and gets the user's details
      *  Assigns the user details to UI elements
      */
@@ -119,15 +129,5 @@ public class ProfileFragment extends Fragment {
             String url_profileimg = account.getPhotoUrl().toString();
             Glide.with(getActivity()).load(url_profileimg).into(img_user);
         }
-    }
-
-    /**
-     *  protected void function, Overridden Destructor of a Fragment
-     *  Terminates the Fragment, deallocating variables accordingly
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
