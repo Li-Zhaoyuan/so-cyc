@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.widget.Toast;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.control.APIManager;
@@ -43,6 +44,7 @@ public class TestingActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(getApplicationContext(), "TestingActivity->OnCreate()", Toast.LENGTH_SHORT).show();
 
         binding = ActivityTestingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -51,7 +53,7 @@ public class TestingActivity extends AppCompatActivity implements OnMapReadyCall
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_dashboard, R.id.nav_navigation, R.id.nav_profile)
+                R.id.nav_dashboard,   R.id.nav_navigation, R.id.nav_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -93,7 +95,9 @@ public class TestingActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+        APIManager.getInstance(this).gMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -121,5 +125,7 @@ public class TestingActivity extends AppCompatActivity implements OnMapReadyCall
 
             }
         });
+
+        APIManager.getInstance(this).FetchData(this);
     }
 }
