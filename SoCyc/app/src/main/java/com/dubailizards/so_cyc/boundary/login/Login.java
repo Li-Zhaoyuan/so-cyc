@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
-            Intent intent = new Intent(getApplicationContext(), BaseActivity.class); // TODO: Change this to BaseActivity, once logout can be done from there
+            Intent intent = new Intent(getApplicationContext(), BaseActivity.class);
             startActivity(intent);
         }
     }

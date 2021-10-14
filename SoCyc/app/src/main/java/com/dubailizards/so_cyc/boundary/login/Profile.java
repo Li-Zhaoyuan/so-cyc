@@ -15,7 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 
-// TODO: Move the logical code of this profile screen into the profile fragment
+// TODO: Remove this class and XML
 public class Profile extends AppCompatActivity {
     ImageView picture;
     TextView name, mail;

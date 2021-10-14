@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
 
+// TODO: Figure out how fragment transitions work to implement sub event menus
+
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Dashboard
  *  Displays interactive UI elements in regards to events
