@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -66,7 +67,6 @@ public class ProfileFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
-
         // Get the view where UI entities are stored
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         // Set up my entities in the view

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.entity.EventDetails;
 
 /**
@@ -27,8 +28,9 @@ public class HostEventFragment extends Fragment {
      *  Initializes the Fragment, and sets up necessary parameters
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return getView();
+        //super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_hostevent, container, false);
+        return view;
     }
 
     /**

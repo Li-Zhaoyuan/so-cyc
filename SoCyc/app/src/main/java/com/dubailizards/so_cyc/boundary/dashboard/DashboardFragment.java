@@ -1,20 +1,28 @@
 package com.dubailizards.so_cyc.boundary.dashboard;
 
+import android.content.Intent;
 import android.media.metrics.Event;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.dashboard.subscreens.HostEventFragment;
+import com.dubailizards.so_cyc.boundary.login.Login;
 import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
 import com.dubailizards.so_cyc.entity.EventDetails;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -48,9 +56,8 @@ public class DashboardFragment extends Fragment {
      *  protected void function, Overridden Constructor of a Fragment
      *  Initializes the Fragment, and sets up necessary parameters
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        /*dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
@@ -63,7 +70,22 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        return root;
+        return root;*/
+
+        // Setup Host Event Button
+        // Get the view where UI entities are stored
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        // Set up my entities in the view
+        Button btn_host = view.findViewById(R.id.btn_hostevent);
+        btn_host.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                HostEventFragment n = new HostEventFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+            }
+        });
+        // Return the fragment's view
+        return view;
     }
 
     /**
