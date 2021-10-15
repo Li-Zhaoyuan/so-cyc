@@ -1,4 +1,4 @@
-package com.dubailizards.so_cyc.boundary.navigation;
+package com.dubailizards.so_cyc.entity;
 
 public class Coordinate {
     double langtitude;
