@@ -14,7 +14,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dubailizards.so_cyc.boundary.MainActivity;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
+import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 
 import org.json.JSONObject;
 
@@ -68,6 +71,12 @@ public class APIManager {
                         JSONObject geoJsonData = response;
                         GeoJsonLayer layer = new GeoJsonLayer(gMap, geoJsonData);
                         layer.addLayerToMap();
+
+                        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
+                        //pointStyle.setIcon();
+                        pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                        pointStyle.setTitle("Bicycle Rack");
+                        //pointStyle.setSnippet("Bicycle Rack");
 
                         //Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                         //InputStream inputStream = new ByteArrayInputStream(response.getBytes());
