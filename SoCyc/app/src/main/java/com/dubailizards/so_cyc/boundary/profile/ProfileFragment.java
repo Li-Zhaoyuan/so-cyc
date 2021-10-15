@@ -10,15 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.dubailizards.so_cyc.R;
-import com.dubailizards.so_cyc.boundary.login.Login;
+import com.dubailizards.so_cyc.boundary.login.LoginActivity;
 import com.dubailizards.so_cyc.databinding.FragmentProfileBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,42 +27,40 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ProfileFragment extends Fragment {
 
     /**
-     *  private ProfileViewModel variable
-     *  Object that holds logical code relating to this fragment
-     */
-    private ProfileViewModel profileViewModel;
-
-    /**
      *  private FragmentProfileBinding variable
      *  Auto generated class type that represents the binding between XML layout file and data objects
      */
     private FragmentProfileBinding binding;
 
-    // Muh UI elems TODO: Better comment
+    /**
+     *  private Button variable
+     *  Variable that holds a reference to the logout button in the layout
+     */
     Button btn_logout;
+
+    /**
+     *  private TextView variable
+     *  Variable that holds a reference to the TextView in the layout
+     */
     TextView txt_displayname;
+
+    /**
+     *  private TextView variable
+     *  Variable that holds a reference to the TextView in the layout
+     */
     TextView txt_email;
+
+    /**
+     *  private ImageView variable
+     *  Variable that holds a reference to the ImageView in the layout
+     */
     ImageView img_user;
 
     /**
      *  protected void function, Overridden Constructor of a Fragment
      *  Initializes the Fragment, and sets up necessary parameters
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        /*profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
-
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textProfile;
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Get the view where UI entities are stored
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         // Set up my entities in the view
@@ -74,7 +68,7 @@ public class ProfileFragment extends Fragment {
         // Set up profile data
         GetProfileData(GoogleSignIn.getLastSignedInAccount(getActivity()));
         // Setup logout
-        SetupLogout();
+        SetupLogoutButton();
         // Return the fragment's view
         return view;
     }
@@ -105,12 +99,12 @@ public class ProfileFragment extends Fragment {
      *  private void function, Logout button logic
      *  Sets up a listener to handle the logic of the logout button
      */
-    private void SetupLogout(){
+    private void SetupLogoutButton(){
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(), Login.class); // The activity is the passed context
+                Intent intent = new Intent(getActivity(), LoginActivity.class); // The activity is the passed context
                 startActivity(intent);
             }
         });
@@ -122,7 +116,7 @@ public class ProfileFragment extends Fragment {
      *  Makes use of google sign in and gets the user's details
      *  Assigns the user details to UI elements
      */
-    public void GetProfileData(GoogleSignInAccount account){
+    private void GetProfileData(GoogleSignInAccount account){
         if(account != null){
             txt_displayname.setText(account.getDisplayName());
             txt_email.setText(account.getEmail());
