@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -66,7 +67,6 @@ public class ProfileFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
-
         // Get the view where UI entities are stored
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         // Set up my entities in the view
@@ -77,6 +77,16 @@ public class ProfileFragment extends Fragment {
         SetupLogout();
         // Return the fragment's view
         return view;
+    }
+
+    /**
+     *  protected void function, Overridden Destructor of a Fragment
+     *  Terminates the Fragment, deallocating variables accordingly
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     /**
@@ -108,7 +118,7 @@ public class ProfileFragment extends Fragment {
 
     /**
      *  private void function, Gets User Profile Details
-     *  @param account is the last signed in google account
+     *  @param account is user's account
      *  Makes use of google sign in and gets the user's details
      *  Assigns the user details to UI elements
      */
@@ -119,15 +129,5 @@ public class ProfileFragment extends Fragment {
             String url_profileimg = account.getPhotoUrl().toString();
             Glide.with(getActivity()).load(url_profileimg).into(img_user);
         }
-    }
-
-    /**
-     *  protected void function, Overridden Destructor of a Fragment
-     *  Terminates the Fragment, deallocating variables accordingly
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
