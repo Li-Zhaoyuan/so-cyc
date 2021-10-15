@@ -1,5 +1,7 @@
 package com.dubailizards.so_cyc.entity;
 
+import android.util.Log;
+
 public class EventDetails {
     String eventPictureURL;
     String eventTitle;
@@ -10,6 +12,10 @@ public class EventDetails {
     int eventStartTime;
     int eventEndTime;
     int eventID;
+
+    public EventDetails()
+    {
+    }
 
     public EventDetails(String eventPictureURL,
             String eventTitle,
@@ -33,78 +39,96 @@ public class EventDetails {
     }
 
     //Getters
-    public String GetEventPictureURL()
+    public String getEventPictureURL()
     {
         return eventPictureURL;
     }
-    public String GetEventTitle()
+    public String getEventTitle()
     {
         return eventTitle;
     }
-    public String GetEventAddress()
+    public String getEventAddress()
     {
         return eventAddress;
     }
-    public String GetEventDescription()
+    public String getEventDescription()
     {
         return eventDescription;
     }
-    public int GetEventDate()
+    public int getEventDate()
     {
         return eventDate;
     }
-    public int GetEventHostID()
+    public int getEventHostID()
     {
         return eventHostID;
     }
-    public int GetEventStartTime()
+    public int getEventStartTime()
     {
         return eventStartTime;
     }
-    public int GetEventEndTime()
+    public int getEventEndTime()
     {
         return eventEndTime;
     }
-    public int GetEventID()
+    public int getEventID()
     {
         return eventID;
     }
 
     //Setters
-    public void SetEventPictureURL(String url)
+    public void setEventPictureURL(String url)
     {
         eventPictureURL = url;
     }
-    public void SetEventTitle(String title)
+    public void setEventTitle(String title)
     {
         eventTitle = title;
     }
-    public void SetEventAddress(String address)
+    public void setEventAddress(String address)
     {
         eventAddress = address;
     }
-    public void SetEventHostID(int id)
+    public void setEventHostID(int id)
     {
         eventHostID = id;
     }
-    public void SetEventDate(int date)
+    public void setEventDate(int date)
     {
         eventDate = date;
     }
-    public void SetEventDescription(String description)
+    public void setEventDescription(String description)
     {
         eventDescription = description;
     }
-    public void SetEventStartTime(int time)
+    public void setEventStartTime(int time)
     {
         eventStartTime = time;
     }
-    public void SetEventEndTime(int time)
+    public void setEventEndTime(int time)
     {
         eventEndTime = time;
     }
-    public void SetEventID(int id)
+    public void setEventID(int id)
     {
         eventID = id;
     }
+
+    /**
+     * A debug function.
+     * prints all the class attributes
+     */
+    public void PrintAll()
+    {
+        Log.d("EventDetails","eventPictureURL: " + eventPictureURL);
+        Log.d("EventDetails","eventTitle: " + eventTitle);
+        Log.d("EventDetails","eventAddress: " + eventAddress);
+        Log.d("EventDetails","eventHostID: " + eventHostID);
+        Log.d("EventDetails","eventDate: " + eventDate);
+        Log.d("EventDetails","eventDescription: " + eventDescription);
+        Log.d("EventDetails","eventStartTime: " + eventStartTime);
+        Log.d("EventDetails","eventEndTime: " + eventEndTime);
+        Log.d("EventDetails","eventID: " + eventID);
+    }
+
 }
