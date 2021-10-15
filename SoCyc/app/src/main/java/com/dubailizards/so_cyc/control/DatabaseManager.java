@@ -4,10 +4,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dubailizards.so_cyc.entity.EventDetails;
+import com.dubailizards.so_cyc.entity.UserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -93,9 +97,27 @@ public final class DatabaseManager {
         //System.out.println(GetData("cities","LA").get("first"));
         //GetData("cities","LA");
         //QueryData("cities","LA", "first");
-        GetDataFromFireStore("cities","LA");
+        GetDataFromFireStore("cities","Singapore");
         //while(dataFromFireStore == null);
         DebugPrintMap(dataFromFireStore);
+        UserDetails ud = new UserDetails("String firstName",
+                "String lastName",
+                "String country",
+                "String state");
+        EventDetails ed = new EventDetails("String eventPictureURL",
+                "String eventTitle",
+                "String eventAddress",
+                "String eventDescription",
+            1,
+            1,
+            1,
+            1,
+            1);
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        AddData("EventDetails",fbuser.getUid(),ed);
+        //AddData("UserDetails",fbuser.getUid(),ud);
+        GetEventDetailsData(fbuser.getUid());
     }
 
     /**
@@ -110,6 +132,58 @@ public final class DatabaseManager {
         // Add a new document with a generated ID
         db.collection(collectionName).document(documentName)
                 .set(doc)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    /**
+     * An add request function. Take note that it runs Asynchronously
+     * Adds data in the form of a Map<String, Object> to the Firestore
+     * @param collectionName is the collection that holds the document that will hold the data
+     * @param documentName is the document that holds all the map data
+     * @param ed is the EventDetail class entity that you want to pass into the database
+     */
+    public void AddData(String collectionName, String documentName, EventDetails ed)
+    {
+        // Add a new document with a generated ID
+        db.collection(collectionName).document(documentName)
+                .set(ed)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    /**
+     * An add request function. Take note that it runs Asynchronously
+     * Adds data in the form of a Map<String, Object> to the Firestore
+     * @param collectionName is the collection that holds the document that will hold the data
+     * @param documentName is the document that holds all the map data
+     * @param ud is the UserDetails class entity that you want to pass into the database
+     */
+    public void AddData(String collectionName, String documentName, UserDetails ud)
+    {
+        // Add a new document with a generated ID
+        db.collection(collectionName).document(documentName)
+                .set(ud)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -154,6 +228,44 @@ public final class DatabaseManager {
             }
         });
         //return db.collection(collectionName).document(documentName).get().getResult().getData();
+    }
+
+    /**
+     * A get request function.
+     * Gets/Query map data from the Firestore. Take note that it runs Asynchronously.
+     * Deprecated, only use this function as a reference
+     * @param documentName is the unique key that points to the EventDetails object data
+     */
+    public void GetEventDetailsData(String documentName)
+    {
+        String collectionName = "EventDetails";
+        DocumentReference docRef = db.collection(collectionName).document(documentName);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                EventDetails ed = documentSnapshot.toObject(EventDetails.class);
+                ed.PrintAll();
+            }
+        });
+    }
+
+    /**
+     * A get request function.
+     * Gets/Query map data from the Firestore. Take note that it runs Asynchronously.
+     * Deprecated, only use this function as a reference
+     * @param documentName is the unique key that points to the UserDetail object data
+     */
+    public void GetUserDetailsData(String documentName)
+    {
+        String collectionName = "UserDetails";
+        DocumentReference docRef = db.collection(collectionName).document(documentName);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserDetails ud = documentSnapshot.toObject(UserDetails.class);
+                ud.PrintAll();
+            }
+        });
     }
 
     /**

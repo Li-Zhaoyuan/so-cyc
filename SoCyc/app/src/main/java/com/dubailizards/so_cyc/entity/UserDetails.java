@@ -1,10 +1,16 @@
 package com.dubailizards.so_cyc.entity;
 
+import android.util.Log;
+
 public class UserDetails {
     String firstName;
     String lastName;
     String country;
     String state;
+
+    public UserDetails()
+    {
+    }
 
     public UserDetails(String firstName,
             String lastName,
@@ -19,40 +25,51 @@ public class UserDetails {
 
     // Getters
 
-    public String GetFirstName()
+    public String getFirstName()
     {
         return firstName;
     }
-    public String GetLastName()
+    public String getLastName()
     {
         return lastName;
     }
-    public String GetCountry()
+    public String getCountry()
     {
         return country;
     }
-
-    public String GetState()
+    public String getState()
     {
         return state;
     }
 
 
 // Setters
-    public void SetFirstName(String _firstName)
+    public void setFirstName(String _firstName)
     {
         firstName = _firstName;
     }
-    public void SetLastName(String _lastName)
+    public void setLastName(String _lastName)
     {
         lastName = _lastName;
     }
-    public void SetCountry(String _country)
+    public void setCountry(String _country)
     {
         country = _country;
     }
-    public void SetState(String _state)
+    public void setState(String _state)
     {
         state = _state;
+    }
+
+    /**
+     * A debug function.
+     * prints all the class attributes
+     */
+    public void PrintAll()
+    {
+        Log.d("UserDetails","firstName: " + firstName);
+        Log.d("UserDetails","lastName: " + lastName);
+        Log.d("UserDetails","country: " + country);
+        Log.d("UserDetails","state: " + state);
     }
 }
