@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dubailizards.so_cyc.databinding.ActivityMainBinding;
-import com.dubailizards.so_cyc.boundary.login.Login;
+import com.dubailizards.so_cyc.boundary.login.LoginActivity;
 
 /**
  *  Boundary Class, Main Activity UI, required for android
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // Insert splash screen here
 
         // Transit to login
-        Intent switchActivityIntent = new Intent(this, Login.class);
+        Intent switchActivityIntent = new Intent(this, LoginActivity.class);
         startActivity(switchActivityIntent);
     }
 }

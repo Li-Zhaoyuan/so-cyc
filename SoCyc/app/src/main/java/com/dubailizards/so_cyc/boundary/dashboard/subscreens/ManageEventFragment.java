@@ -46,7 +46,7 @@ public class ManageEventFragment extends Fragment {
      *  On call, update the server that the event the current user is hosting has changes
      *  Save the changes to the database
      */
-    private void UpdateEventDetails(){
+    private void UpdateEventData(){
         // TODO: Get changes from data fields on UI, update the server
     }
 }

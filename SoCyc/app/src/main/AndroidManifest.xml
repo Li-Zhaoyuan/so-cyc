@@ -40,8 +40,7 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyCUq5GqWPFH7Q9NQIbp9tYrhutAhVFxKg8" />
         </activity>
-        <activity android:name=".boundary.login.Login"></activity>
-        <activity android:name=".boundary.login.Profile"></activity>
+        <activity android:name=".boundary.login.LoginActivity"></activity>
         <activity android:name=".boundary.BaseActivity"></activity>
         <activity android:name=".boundary.TestingActivity"></activity>
 

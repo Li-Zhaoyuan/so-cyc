@@ -48,7 +48,7 @@ public class HostEventFragment extends Fragment {
      *  Get event details from the UI fields and update the local EventDetails
      *  Save the EventDetails to the database
      */
-    private void UpdateEventDetails(){
+    private void CreateEvent(){
         // TODO: Get changes from data fields on UI, update the server
     }
 }

@@ -31,12 +31,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class NavigationFragment extends Fragment {
 
     /**
-     *  private NavigationViewModel variable
-     *  Object that holds logical code relating to this fragment
-     */
-    private NavigationViewModel navigationViewModel;
-
-    /**
      *  private FragmentNavigationBinding variable
      *  Auto generated class type that represents the binding between XML layout file and data objects
      */
