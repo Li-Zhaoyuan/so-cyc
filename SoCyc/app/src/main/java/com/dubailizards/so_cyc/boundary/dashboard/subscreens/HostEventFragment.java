@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.BaseActivity;
 import com.dubailizards.so_cyc.entity.EventDetails;
 
 /**
@@ -30,6 +31,7 @@ public class HostEventFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_hostevent, container, false);
+        ((BaseActivity)getActivity()).setActionBarTitle("Host Event"); // Rename the title
         return view;
     }
 

@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.dashboard.subscreens.EventDetailFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.HostEventFragment;
+import com.dubailizards.so_cyc.boundary.dashboard.subscreens.ManageEventFragment;
 import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
 import com.dubailizards.so_cyc.entity.EventDetails;
 
@@ -43,12 +45,28 @@ public class DashboardFragment extends Fragment {
         // Get the view where UI entities are stored
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         // Set up my entities in the view
+        // Host Event
         Button btn_host = view.findViewById(R.id.btn_hostevent);
         btn_host.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                HostEventFragment n = new HostEventFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+                DisplayHostEventUI();
+            }
+        });
+        // Manage Event
+        Button btn_manage = view.findViewById(R.id.btn_manageevent);
+        btn_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                DisplayManageEventUI();
+            }
+        });
+        // View Event Details
+        Button btn_details = view.findViewById(R.id.btn_eventdetails);
+        btn_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                DisplayEventDetailUI();
             }
         });
         // Return the fragment's view
@@ -86,7 +104,33 @@ public class DashboardFragment extends Fragment {
      *  When called, open the HostEventFragment, to show the host screen
      */
     private void DisplayHostEventUI(){
-        // TODO: Transit to the HostEventFragment
+        HostEventFragment n = new HostEventFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+    }
+
+    /**
+     *  private void function, Displays the manage event UI
+     *  When called, open the ManageEventFragment, to show the host screen
+     */
+    private void DisplayManageEventUI(){
+        ManageEventFragment n = new ManageEventFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+    }
+
+    /**
+     *  private void function, Displays the event detail UI
+     *  When called, open the EventDetailFragment, to show the event detail screen
+     */
+    private void DisplayEventDetailUI(){
+        EventDetailFragment n = new EventDetailFragment();
+        EventDetails temp = new EventDetails();
+        temp.setEventTitle("Test");
+        temp.setEventAddress("NTU");
+        temp.setEventDate(1337);
+        temp.setEventDescription("Test Desc");
+        // TODO: Input the actual event details from database, Query DB for the event and insert to fragment
+        n.SetEventDetails(temp);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**

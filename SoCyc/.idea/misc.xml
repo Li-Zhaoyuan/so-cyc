@@ -21,9 +21,11 @@
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/activity_base.xml" value="0.173046875" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/activity_main.xml" value="0.173046875" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/activity_testing.xml" value="0.2978142076502732" />
-        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_dashboard.xml" value="0.176" />
+        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_dashboard.xml" value="0.4" />
+        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_eventdetail.xml" value="0.264" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_home.xml" value="0.173046875" />
-        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_hostevent.xml" value="0.173046875" />
+        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_hostevent.xml" value="0.264" />
+        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_manageevent.xml" value="0.2265625" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_navigation.xml" value="0.173046875" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_notifications.xml" value="0.173046875" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_profile.xml" value="0.264" />

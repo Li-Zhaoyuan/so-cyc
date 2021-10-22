@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.BaseActivity;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -28,8 +30,10 @@ public class ManageEventFragment extends Fragment {
      *  Initializes the Fragment, and sets up necessary parameters
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return getView();
+        //super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_manageevent, container, false);
+        ((BaseActivity)getActivity()).setActionBarTitle("Manage Event"); // Rename the title
+        return view;
     }
 
     /**

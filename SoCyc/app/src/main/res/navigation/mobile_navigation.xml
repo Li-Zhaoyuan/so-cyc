@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/nav_navigation"
         android:name="com.dubailizards.so_cyc.boundary.navigation.NavigationFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_navigation"
         tools:layout="@layout/fragment_navigation"
         />
 
@@ -26,10 +26,4 @@
         app:popUpToInclusive="true"
         />
 
-    <fragment
-        android:id="@+id/nav_hostevent"
-        android:name="com.dubailizards.so_cyc.boundary.dashboard.subscreens.HostEventFragment"
-        android:label="Host Event"
-        tools:layout="@layout/fragment_hostevent"
-        />
 </navigation>
