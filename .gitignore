@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+SoCyc/.idea/deploymentTargetDropDown.xml

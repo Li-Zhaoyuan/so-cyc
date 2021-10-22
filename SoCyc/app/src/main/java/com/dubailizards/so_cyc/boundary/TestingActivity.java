@@ -97,7 +97,6 @@ public class TestingActivity extends AppCompatActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        APIManager.getInstance(this).gMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -126,6 +125,8 @@ public class TestingActivity extends AppCompatActivity implements OnMapReadyCall
             }
         });
 
-        APIManager.getInstance(this).FetchData(this);
+        //APIManager.getInstance(this).FetchData(this);
+        //APIManager.getInstance(this).FetchData2(this);
+        
     }
 }
