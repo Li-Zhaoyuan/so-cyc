@@ -1,6 +1,7 @@
 package com.dubailizards.so_cyc.boundary.dashboard.subscreens;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,22 @@ import androidx.fragment.app.Fragment;
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
 import com.dubailizards.so_cyc.boundary.dashboard.DashboardFragment;
+import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents a screen of the Dashboard
@@ -109,15 +124,15 @@ public class EventDetailFragment extends Fragment {
 
         // Date
         text = view.findViewById(R.id.txtField_EDDate);
-        text.setText(Integer.toString(event.getEventDate()));
-        /*// Start Time
+        text.setText(event.getEventDate());
+        // Start Time
         text = view.findViewById(R.id.txtField_EDStartTime);
-        text.setText(event.getEventStartTime());
+        text.setText(Integer.toString(event.getEventStartTime()));
         // End Time
         text = view.findViewById(R.id.txtField_EDEndTime);
-        text.setText(event.getEventEndTime());
+        text.setText(Integer.toString(event.getEventEndTime()));
 
-         */
+
 
         // Desc
         text = view.findViewById(R.id.txtField_EDDescription);
@@ -132,6 +147,11 @@ public class EventDetailFragment extends Fragment {
      */
     private void UpdateJoinEvent(int eventID){
         // TODO: Update the database that user has joined event
+
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
+
+        ref.update("eventIDs", FieldValue.arrayUnion(eventID));
     }
 
     /**
@@ -141,5 +161,10 @@ public class EventDetailFragment extends Fragment {
      */
     private void UpdateLeaveEvent(int eventID){
         // TODO: Update the database that user has left event
+
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
+
+        ref.update("eventIDs", FieldValue.arrayRemove(eventID));
     }
 }

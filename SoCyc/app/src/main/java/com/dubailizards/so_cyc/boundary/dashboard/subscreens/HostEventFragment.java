@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
+import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents a screen of the Dashboard
@@ -52,5 +55,8 @@ public class HostEventFragment extends Fragment {
      */
     private void CreateEvent(){
         // TODO: Get changes from data fields on UI, update the server
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseManager.GetInstance().AddData("EventDetails", fbuser.getUid(), details);
     }
 }

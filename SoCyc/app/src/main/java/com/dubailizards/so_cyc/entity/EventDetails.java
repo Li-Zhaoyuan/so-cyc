@@ -8,7 +8,7 @@ public class EventDetails {
     String eventAddress;
     String eventDescription;
     int eventHostID;
-    int eventDate;
+    String eventDate;
     int eventStartTime;
     int eventEndTime;
     int eventID;
@@ -22,7 +22,7 @@ public class EventDetails {
             String eventAddress,
             String eventDescription,
             int eventHostID,
-            int eventDate,
+            String eventDate,
             int eventStartTime,
             int eventEndTime,
             int eventID)
@@ -55,7 +55,7 @@ public class EventDetails {
     {
         return eventDescription;
     }
-    public int getEventDate()
+    public String getEventDate()
     {
         return eventDate;
     }
@@ -93,7 +93,7 @@ public class EventDetails {
     {
         eventHostID = id;
     }
-    public void setEventDate(int date)
+    public void setEventDate(String date)
     {
         eventDate = date;
     }

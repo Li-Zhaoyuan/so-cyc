@@ -109,7 +109,7 @@ public final class DatabaseManager {
                 "String eventAddress",
                 "String eventDescription",
             1,
-            1,
+            "1/1/1998",
             1,
             1,
             1);

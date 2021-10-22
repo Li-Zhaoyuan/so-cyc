@@ -1,6 +1,7 @@
 package com.dubailizards.so_cyc.boundary.dashboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,19 @@ import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.EventDetailFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.HostEventFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.ManageEventFragment;
+import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
 import com.dubailizards.so_cyc.entity.EventDetails;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Dashboard
@@ -87,15 +97,38 @@ public class DashboardFragment extends Fragment {
      *  private void function, Gets List of Events
      *  Writes the list of events into an array of EventDetails Type
      */
-    private void GetEventList(){
+    private void GetJoinedEventList(){
         // TODO: Get the list of events for this user
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        Log.d("DashboardFragment", "DocumentSnapshot data: " + document.getData());
+                        Array arr = (Array)(document.getData().get("eventIDs"));
+                        //do stuff with array
+
+
+                    } else {
+                        Log.d("DashboardFragment", "No such document");
+                    }
+
+                } else {
+                    Log.d("DashboardFragment", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     /**
      *  private void function, Displays events as UI
      *  Makes use of events in the list and draws them as UI elements
      */
-    private void DisplayEventList(){
+    private void DisplayJoinedEventList(){
         // TODO: Draw the list of events as UI elements
     }
 
@@ -126,7 +159,9 @@ public class DashboardFragment extends Fragment {
         EventDetails temp = new EventDetails();
         temp.setEventTitle("Test");
         temp.setEventAddress("NTU");
-        temp.setEventDate(1337);
+        temp.setEventDate("1337");
+        temp.setEventStartTime(1200);
+        temp.setEventEndTime(2200);
         temp.setEventDescription("Test Desc");
         // TODO: Input the actual event details from database, Query DB for the event and insert to fragment
         n.SetEventDetails(temp);
