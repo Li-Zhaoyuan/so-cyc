@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.SortedList;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,12 +24,14 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+
+//https://geo.data.gov.sg/hawkercentre/2021/09/01/geojson/hawkercentre.geojson
 
 public class APIManager {
     private static APIManager instance;
     private RequestQueue requestQueue;
     private static Context ctx;
-    public GoogleMap gMap;
 
     private APIManager(Context context) {
         ctx = context;
@@ -55,36 +58,22 @@ public class APIManager {
         getRequestQueue().add(req);
     }
 
-    public void FetchData(Context context)
+    public void AddLayerFromURL(Context context, ArrayList<GeoJsonLayer> list, GoogleMap gMap, String url)
     {
-        // Instantiate the RequestQueue.
-        String url = "https://geo.data.gov.sg/bicyclerack/2021/07/12/geojson/bicyclerack.geojson";
-
         // Request a string response from the provided URL.
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Display the first 500 characters of the response string.
-                        Toast.makeText(context, "APIManager->OnResponse()", Toast.LENGTH_SHORT).show();
 
                         JSONObject geoJsonData = response;
                         GeoJsonLayer layer = new GeoJsonLayer(gMap, geoJsonData);
-                        layer.addLayerToMap();
-
-                        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
-                        //pointStyle.setIcon();
-                        pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                        pointStyle.setTitle("Bicycle Rack");
-                        //pointStyle.setSnippet("Bicycle Rack");
-
-                        //Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                        //InputStream inputStream = new ByteArrayInputStream(response.getBytes());
+                        list.add(layer);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error occured fetching from " + url, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,23 +82,50 @@ public class APIManager {
 
         return;
     }
-}
 
-//public class BicycleRackAPI
-//{
-//    public static void FetchData(Context context)
+    public void RequestJSONObject(Context context, String url, final APIListener listener)
+    {
+        // Request a string response from the provided URL.
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listener.onResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+        });
+
+        // Add the request to the RequestQueue.
+        this.requestQueue.add(request);
+
+        return;
+    }
+
+//    public void FetchData(Context context)
 //    {
 //        // Instantiate the RequestQueue.
 //        String url = "https://geo.data.gov.sg/bicyclerack/2021/07/12/geojson/bicyclerack.geojson";
 //
 //        // Request a string response from the provided URL.
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>() {
 //                    @Override
-//                    public void onResponse(String response) {
+//                    public void onResponse(JSONObject response) {
 //                        // Display the first 500 characters of the response string.
-//                        Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-//                        InputStream inputStream = new ByteArrayInputStream(response.getBytes());
+//
+//                        JSONObject geoJsonData = response;
+//                        GeoJsonLayer layer = new GeoJsonLayer(gMap, geoJsonData);
+//                        layer.addLayerToMap();
+//
+//                        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
+//                        //pointStyle.setIcon();
+//                        pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+//                        pointStyle.setTitle("Bicycle Rack");
 //                    }
 //                }, new Response.ErrorListener() {
 //            @Override
@@ -119,8 +135,8 @@ public class APIManager {
 //        });
 //
 //        // Add the request to the RequestQueue.
-//        APIManager.getInstance(context).addToRequestQueue(stringRequest);
+//        this.requestQueue.add(request);
 //
 //        return;
 //    }
-//}
+}
