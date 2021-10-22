@@ -88,7 +88,7 @@ public class DashboardFragment extends Fragment {
             }
         });
         // Set up list of events
-        DisplayEventList();
+        DisplayJoinedEventList();
         // Return the fragment's view
         return view;
     }
