@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -47,13 +49,19 @@ public class DashboardFragment extends Fragment {
     private List<EventDetails> eventDetailsList;
 
     /**
+     *  private View variable
+     *  An entity that holds view of the current fragment
+     */
+    private View view;
+
+    /**
      *  protected void function, Overridden Constructor of a Fragment
      *  Initializes the Fragment, and sets up necessary parameters
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Setup Host Event Button
         // Get the view where UI entities are stored
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         // Set up my entities in the view
         // Host Event
         Button btn_host = view.findViewById(R.id.btn_hostevent);
@@ -79,6 +87,8 @@ public class DashboardFragment extends Fragment {
                 DisplayEventDetailUI();
             }
         });
+        // Set up list of events
+        DisplayEventList();
         // Return the fragment's view
         return view;
     }
@@ -130,6 +140,11 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayJoinedEventList(){
         // TODO: Draw the list of events as UI elements
+        // From the list of events generate the rows for the listview
+        ListView lv = view.findViewById(R.id.list_dashboardlist);
+        String[] data = {"1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data);
+        lv.setAdapter(adapter);
     }
 
     /**
