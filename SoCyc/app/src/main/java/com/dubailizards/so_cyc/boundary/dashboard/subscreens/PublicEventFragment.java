@@ -102,8 +102,6 @@ public class PublicEventFragment extends Fragment {
                 });
     }
 
-
-
     /**
      *  private void function, Displays the list of public events
      *  When called, convert the list of events into a list view of all public events

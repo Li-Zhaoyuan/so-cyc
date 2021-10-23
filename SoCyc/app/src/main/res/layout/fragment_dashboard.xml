@@ -9,41 +9,36 @@
 
     <Button
         android:id="@+id/btn_hostevent"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
         android:text="Host Event"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_title1"
         app:layout_constraintTop_toBottomOf="@+id/txt_title1" />
 
     <Button
         android:id="@+id/btn_manageevent"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
         android:text="Manage Event"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_hostevent"
-        app:layout_constraintTop_toTopOf="@+id/btn_hostevent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_title1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_hostevent" />
 
     <Button
         android:id="@+id/btn_publicevent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Browse Public Events"
-        app:layout_constraintEnd_toEndOf="@+id/btn_manageevent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/txt_title1"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <Button
-        android:id="@+id/btn_eventdetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="View My Event Details"
-        app:layout_constraintStart_toStartOf="@+id/txt_title1"
-        app:layout_constraintTop_toBottomOf="@+id/btn_hostevent" />
+        android:layout_marginEnd="30dp"
+        android:text="Browse Events"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_title2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_title2" />
 
     <TextView
         android:id="@+id/txt_title1"
@@ -51,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
-        android:text="My Events"
+        android:text="My Event"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,18 +57,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="My Joined Events"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_eventdetails" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_manageevent" />
 
     <ListView
         android:id="@+id/list_dashboardlist"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
