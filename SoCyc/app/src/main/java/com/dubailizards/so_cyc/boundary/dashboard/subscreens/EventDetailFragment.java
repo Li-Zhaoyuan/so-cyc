@@ -50,7 +50,7 @@ public class EventDetailFragment extends Fragment {
         view.findViewById(R.id.btn_EDjoin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                UpdateJoinEvent(details.getEventHostID());
+                UpdateJoinEvent();
             }
         });
 
@@ -58,7 +58,7 @@ public class EventDetailFragment extends Fragment {
         view.findViewById(R.id.btn_EDleave).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                UpdateLeaveEvent(details.getEventHostID());
+                UpdateLeaveEvent();
             }
         });
 
@@ -129,25 +129,23 @@ public class EventDetailFragment extends Fragment {
 
     /**
      *  private void function, Joins the event, updates the server
-     *  @param eventID the ID of the event the user intends to join
      *  On call, update the server that the current user intends to join the specified event
      */
-    private void UpdateJoinEvent(String eventID){
+    private void UpdateJoinEvent(){
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
 
-        ref.update("eventIDs", FieldValue.arrayUnion(eventID));
+        ref.update("eventIDs", FieldValue.arrayUnion(details.getEventHostID()));
     }
 
     /**
      *  private void function, Leaves the event, updates the server
-     *  @param eventID the ID of the event the user intends to join
      *  On call, update the server that the current user intends to leave the specified event
      */
-    private void UpdateLeaveEvent(String eventID){
+    private void UpdateLeaveEvent(){
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
 
-        ref.update("eventIDs", FieldValue.arrayRemove(eventID));
+        ref.update("eventIDs", FieldValue.arrayRemove(details.getEventHostID()));
     }
 }

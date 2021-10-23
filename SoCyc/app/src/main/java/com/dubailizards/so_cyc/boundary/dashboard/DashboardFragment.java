@@ -101,7 +101,7 @@ public class DashboardFragment extends Fragment {
         });
 
         // Set up list of events
-        DisplayJoinedEventList();
+        GetJoinedEventList();
         // Return the fragment's view
         return view;
     }
@@ -133,7 +133,7 @@ public class DashboardFragment extends Fragment {
                         Log.d("DashboardFragment", "DocumentSnapshot data: " + document.getData());
                         Array arr = (Array)(document.getData().get("eventIDs"));
                         //do stuff with array
-
+                        DisplayJoinedEventList();
 
                     } else {
                         Log.d("DashboardFragment", "No such document");
@@ -152,7 +152,7 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayJoinedEventList(){
         // Get the events that this user has joined from the DB
-        GetJoinedEventList();
+        //GetJoinedEventList();
         // From the list of events generate the rows for the listview
         ListView lv = view.findViewById(R.id.list_dashboardlist);
 

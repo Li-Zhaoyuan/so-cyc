@@ -144,26 +144,24 @@
         android:id="@+id/btn_EDjoin"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:text="JOIN EVENT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_EDDescription"
+        app:layout_constraintTop_toTopOf="@+id/btn_EDcancel"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn_EDleave"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="LEAVE EVENT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_EDDescription"
+        app:layout_constraintTop_toTopOf="@+id/btn_EDcancel"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
