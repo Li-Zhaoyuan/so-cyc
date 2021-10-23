@@ -75,22 +75,22 @@ public class HostEventFragment extends Fragment {
     private void CreateEvent(){
         // Get data from fields
         // Name
-        EditText text = view.findViewById(R.id.txtField_EDEventName);
+        EditText text = view.findViewById(R.id.txtField_HEEventName);
         details.setEventTitle(text.getText().toString());
         // Location
-        text = view.findViewById(R.id.txtField_EDEventLocation);
+        text = view.findViewById(R.id.txtField_HEEventLocation);
         details.setEventAddress(text.getText().toString());
         // Date
-        text = view.findViewById(R.id.txtField_EDDate);
+        text = view.findViewById(R.id.txtField_HEDate);
         details.setEventDate(text.getText().toString());
         // Start Time
-        text = view.findViewById(R.id.txtField_EDStartTime);
+        text = view.findViewById(R.id.txtField_HEStartTime);
         details.setEventStartTime(text.getText().toString());
         // End Time
-        text = view.findViewById(R.id.txtField_EDEndTime);
+        text = view.findViewById(R.id.txtField_HEEndTime);
         details.setEventEndTime(text.getText().toString());
         // Desc
-        text = view.findViewById(R.id.txtField_EDDescription);
+        text = view.findViewById(R.id.txtField_HEDescription);
         details.setEventDescription(text.getText().toString());
 
         // Get the user
