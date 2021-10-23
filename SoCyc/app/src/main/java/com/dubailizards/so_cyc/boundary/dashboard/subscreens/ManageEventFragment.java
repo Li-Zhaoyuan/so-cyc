@@ -65,22 +65,22 @@ public class ManageEventFragment extends Fragment {
     private void UpdateEventData(){
         // Get data from fields
         // Name
-        EditText text = view.findViewById(R.id.txtField_EDEventName);
+        EditText text = view.findViewById(R.id.txt_MEEventName);
         details.setEventTitle(text.getText().toString());
         // Location
-        text = view.findViewById(R.id.txtField_EDEventLocation);
+        text = view.findViewById(R.id.txtField_MEEventLocation);
         details.setEventAddress(text.getText().toString());
         // Date
-        text = view.findViewById(R.id.txtField_EDDate);
+        text = view.findViewById(R.id.txtField_MEDate);
         details.setEventDate(text.getText().toString());
         // Start Time
-        text = view.findViewById(R.id.txtField_EDStartTime);
+        text = view.findViewById(R.id.txtField_MEStartTime);
         details.setEventStartTime(text.getText().toString());
         // End Time
-        text = view.findViewById(R.id.txtField_EDEndTime);
+        text = view.findViewById(R.id.txtField_MEEndTime);
         details.setEventEndTime(text.getText().toString());
         // Desc
-        text = view.findViewById(R.id.txtField_EDDescription);
+        text = view.findViewById(R.id.txtField_MEDescription);
         details.setEventDescription(text.getText().toString());
 
         // Get the user

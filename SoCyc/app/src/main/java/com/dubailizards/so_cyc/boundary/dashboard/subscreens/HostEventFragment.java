@@ -45,6 +45,9 @@ public class HostEventFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_hostevent, container, false);
         ((BaseActivity)getActivity()).setActionBarTitle("Host Event"); // Rename the title
 
+        // Initiallize Event Details Object
+        details = new EventDetails();
+
         // Bind the buttons to functions
         // Create Event
         view.findViewById(R.id.btn_HEcreate).setOnClickListener(new View.OnClickListener() {
