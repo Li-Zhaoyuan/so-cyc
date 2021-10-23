@@ -83,8 +83,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Start Time"
         android:enabled="false"
+        android:hint="Start Time"
         android:inputType="time"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/txtField_EDDate"
@@ -95,12 +95,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="End Time"
         android:enabled="false"
+        android:hint="End Time"
         android:inputType="time"
         android:textSize="15dp"
-        app:layout_constraintStart_toStartOf="@+id/txtField_EDStartTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_EDStartTime" />
+        app:layout_constraintStart_toEndOf="@+id/txtField_EDStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_EDDate" />
 
     <TextView
         android:id="@+id/txt_EDEventDescription"
@@ -110,8 +110,8 @@
         android:text="Event Description"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtField_EDEndTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_EDEndTime" />
+        app:layout_constraintStart_toStartOf="@+id/txtField_EDStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_EDStartTime" />
 
     <EditText
         android:id="@+id/txtField_EDDescription"
@@ -131,7 +131,7 @@
         android:id="@+id/btn_EDcancel"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="CANCEL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +157,7 @@
         android:id="@+id/btn_EDleave"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="LEAVE EVENT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

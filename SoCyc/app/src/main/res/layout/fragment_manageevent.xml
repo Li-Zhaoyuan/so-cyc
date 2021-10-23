@@ -94,8 +94,8 @@
         android:hint="End Time"
         android:inputType="time"
         android:textSize="15dp"
-        app:layout_constraintStart_toStartOf="@+id/txtField_MEStartTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_MEStartTime" />
+        app:layout_constraintStart_toEndOf="@+id/txtField_MEStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEDate" />
 
     <TextView
         android:id="@+id/txt_MEEventDescription"
@@ -105,8 +105,8 @@
         android:text="What is your event about?"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtField_MEEndTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_MEEndTime" />
+        app:layout_constraintStart_toStartOf="@+id/txtField_MEStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEStartTime" />
 
     <EditText
         android:id="@+id/txtField_MEDescription"
@@ -125,7 +125,7 @@
         android:id="@+id/btn_MEcancel"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="CANCEL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
@@ -136,7 +136,7 @@
         android:id="@+id/btn_MEupdate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="UPDATE EVENT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
