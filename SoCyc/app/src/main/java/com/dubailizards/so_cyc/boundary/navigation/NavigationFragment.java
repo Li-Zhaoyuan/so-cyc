@@ -4,6 +4,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.content.Context;
 import android.os.Bundle;
@@ -59,23 +60,27 @@ import java.util.ArrayList;
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Navigation Screen
  *  Displays interactive map making use of Google Maps
  */
-public class NavigationFragment extends Fragment implements TaskLoadedCallback {
+public class NavigationFragment extends Fragment {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 23;
 
-    private Button btnGetDirection;
     private MarkerOptions place1, place2;
     private Polyline currentPolyline;
 
     GoogleMap gMap = null;
+    LatLng userLocation;
 
     ArrayList<GeoJsonLayer> markersLayers = new ArrayList<GeoJsonLayer>();
 
-    /**
-     *  private FragmentNavigationBinding variable
-     *  Auto generated class type that represents the binding between XML layout file and data objects
-     */
-    private FragmentNavigationBinding binding;
+    TaskLoadedCallback callback = new TaskLoadedCallback() {
+        @Override
+        public void onTaskDone(Object... values) {
+            if (currentPolyline != null)
+                currentPolyline.remove();
+            currentPolyline = gMap.addPolyline((PolylineOptions) values[0]);
+            currentPolyline.setColor(getContext().getResources().getColor(R.color.red_a100));
+        }
+    };
 
     /**
      *  protected void function, Overridden Constructor of a Fragment
@@ -89,9 +94,6 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
 
         //Initialize map fragment
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
-
-        //Assign Button
-        btnGetDirection = view.findViewById(R.id.btnGetDirection);
 
         //Check Permission
         checkPermission();
@@ -116,9 +118,9 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
                 gMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                     @Override
                     public void onMyLocationChange(Location location) {
-                        LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                        userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                                latlng, 100);
+                                userLocation, 15);
                         gMap.animateCamera(cameraUpdate);
 
                     }
@@ -128,7 +130,7 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_BLUE, true);
+                                CreateLayer(response, BitmapDescriptorFactory.HUE_YELLOW, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -150,42 +152,15 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
             }
         });
 
-        //1.3490,103.8391
-        //1.3522,103.8372
-        place1 = new MarkerOptions().position(new LatLng(1.3490, 103.8391)).title("Location 1");
-        place2 = new MarkerOptions().position(new LatLng(1.3522, 103.8372)).title("Location 2");
-
-
-        btnGetDirection.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               String url = getUrl(place1.getPosition(), place2.getPosition(), "driving");
-               new FetchURL(getActivity()).execute(url, "driving");
-           }
-        });
-
         //Return view
         return view;
-
-//                navigationViewModel =
-//                new ViewModelProvider(this).get(NavigationViewModel.class);
-//
-//      binding = FragmentNavigationBinding.inflate(inflater, container, false);
-//        View root = binding.getRoot();
-//
-//        final TextView textView = binding.textNavigation;
-//        navigationViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
     }
 
     private void CreateLayer(JSONObject obj, float color, boolean displayOnCreate)
     {
         if (gMap == null)
             return;
+
         GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
         markersLayers.add(layer);
 
@@ -197,6 +172,9 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
             public void onFeatureClick(Feature feature) {
                 GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
                 Toast.makeText(getContext(), "Position is: " + point.getCoordinates().toString(), Toast.LENGTH_LONG).show();
+
+                String url = getUrl(userLocation, point.getCoordinates(), "walking");
+                new FetchURL(callback).execute(url, "walking");
             }
         });
 
@@ -230,12 +208,7 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
         return url;
     }
 
-    @Override
-    public void onTaskDone(Object... values) {
-        if (currentPolyline != null)
-            currentPolyline.remove();
-        currentPolyline = gMap.addPolyline((PolylineOptions) values[0]);
-    }
+
 
     /**
      *  protected void function, Overridden Destructor of a Fragment
@@ -244,7 +217,6 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
         gMap = null;
     }
 }
