@@ -3,4 +3,6 @@
     <string name="title_navigation">Navigation</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
+    <string name="title_host">Host Event</string>
+    <string name="title_manage">Manage Event</string>
 </resources>

@@ -3,31 +3,29 @@ package com.dubailizards.so_cyc.entity;
 import android.util.Log;
 
 public class EventDetails {
-    String eventPictureURL;
+    String eventHostID;
+    String hostDisplayName;
+    String profilePictureURL;
     String eventTitle;
     String eventAddress;
     String eventDescription;
-    int eventHostID;
-    int eventDate;
-    int eventStartTime;
-    int eventEndTime;
-    int eventID;
+    String eventDate;
+    String eventStartTime;
+    String eventEndTime;
 
-    public EventDetails()
-    {
-    }
+    public EventDetails() { }
 
-    public EventDetails(String eventPictureURL,
+    public EventDetails(String profilePictureURL,
             String eventTitle,
             String eventAddress,
             String eventDescription,
-            int eventHostID,
-            int eventDate,
-            int eventStartTime,
-            int eventEndTime,
-            int eventID)
+            String eventHostID,
+            String eventDate,
+            String eventStartTime,
+            String eventEndTime,
+            String hostDisplayName)
     {
-        this.eventPictureURL = eventPictureURL;
+        this.profilePictureURL = profilePictureURL;
         this.eventTitle = eventTitle;
         this.eventAddress = eventAddress;
         this.eventDescription = eventDescription;
@@ -35,13 +33,21 @@ public class EventDetails {
         this.eventDate = eventDate;
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
-        this.eventID = eventID;
+        this.hostDisplayName = hostDisplayName;
     }
 
     //Getters
-    public String getEventPictureURL()
+    public String getEventHostID()
     {
-        return eventPictureURL;
+        return eventHostID;
+    }
+    public String getHostDisplayName()
+    {
+        return hostDisplayName;
+    }
+    public String getProfilePictureURL()
+    {
+        return profilePictureURL;
     }
     public String getEventTitle()
     {
@@ -55,31 +61,31 @@ public class EventDetails {
     {
         return eventDescription;
     }
-    public int getEventDate()
+    public String getEventDate()
     {
         return eventDate;
     }
-    public int getEventHostID()
-    {
-        return eventHostID;
-    }
-    public int getEventStartTime()
+    public String getEventStartTime()
     {
         return eventStartTime;
     }
-    public int getEventEndTime()
+    public String getEventEndTime()
     {
         return eventEndTime;
     }
-    public int getEventID()
-    {
-        return eventID;
-    }
 
     //Setters
-    public void setEventPictureURL(String url)
+    public void setEventHostID(String id)
     {
-        eventPictureURL = url;
+        eventHostID = id;
+    }
+    public void setHostDisplayName(String name)
+    {
+        hostDisplayName = name;
+    }
+    public void setProfilePictureURL(String url)
+    {
+        profilePictureURL = url;
     }
     public void setEventTitle(String title)
     {
@@ -89,11 +95,7 @@ public class EventDetails {
     {
         eventAddress = address;
     }
-    public void setEventHostID(int id)
-    {
-        eventHostID = id;
-    }
-    public void setEventDate(int date)
+    public void setEventDate(String date)
     {
         eventDate = date;
     }
@@ -101,17 +103,40 @@ public class EventDetails {
     {
         eventDescription = description;
     }
-    public void setEventStartTime(int time)
+    public void setEventStartTime(String time)
     {
         eventStartTime = time;
     }
-    public void setEventEndTime(int time)
+    public void setEventEndTime(String time)
     {
         eventEndTime = time;
     }
-    public void setEventID(int id)
-    {
-        eventID = id;
+
+    /**
+     * A public boolean function
+     * On call, checks validity of the EventDetail object by making sure all fields are set
+     */
+    public boolean CheckValidity(){
+        // If any are null return false
+        if (eventHostID == null)
+            return false;
+        if (hostDisplayName == null)
+            return false;
+        if (profilePictureURL == null)
+            return false;
+        if (eventTitle == null)
+            return false;
+        if (eventAddress == null)
+            return false;
+        if (eventDate == null)
+            return false;
+        if (eventDescription == null)
+            return false;
+        if (eventStartTime == null)
+            return false;
+        if (eventEndTime == null)
+            return false;
+        return true;
     }
 
     /**
@@ -120,7 +145,9 @@ public class EventDetails {
      */
     public void PrintAll()
     {
-        Log.d("EventDetails","eventPictureURL: " + eventPictureURL);
+        Log.d("EventDetails","eventHostID: " + eventHostID);
+        Log.d("EventDetails","hostDisplayName: " + hostDisplayName);
+        Log.d("EventDetails","eventPictureURL: " + profilePictureURL);
         Log.d("EventDetails","eventTitle: " + eventTitle);
         Log.d("EventDetails","eventAddress: " + eventAddress);
         Log.d("EventDetails","eventHostID: " + eventHostID);
@@ -128,7 +155,5 @@ public class EventDetails {
         Log.d("EventDetails","eventDescription: " + eventDescription);
         Log.d("EventDetails","eventStartTime: " + eventStartTime);
         Log.d("EventDetails","eventEndTime: " + eventEndTime);
-        Log.d("EventDetails","eventID: " + eventID);
     }
-
 }

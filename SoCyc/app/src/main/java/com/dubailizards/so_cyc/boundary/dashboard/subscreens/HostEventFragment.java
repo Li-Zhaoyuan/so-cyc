@@ -4,12 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.BaseActivity;
+import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents a screen of the Dashboard
@@ -24,12 +32,31 @@ public class HostEventFragment extends Fragment {
     private EventDetails details;
 
     /**
+     *  private View variable
+     *  An entity that holds view of the current fragment
+     */
+    private View view;
+
+    /**
      *  protected void function, Overridden Constructor of a Fragment
      *  Initializes the Fragment, and sets up necessary parameters
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_hostevent, container, false);
+        view = inflater.inflate(R.layout.fragment_hostevent, container, false);
+        ((BaseActivity)getActivity()).setActionBarTitle("Host Event"); // Rename the title
+
+        // Initiallize Event Details Object
+        details = new EventDetails();
+
+        // Bind the buttons to functions
+        // Create Event
+        view.findViewById(R.id.btn_HEcreate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                CreateEvent();
+            }
+        });
+
         return view;
     }
 
@@ -49,6 +76,41 @@ public class HostEventFragment extends Fragment {
      *  Save the EventDetails to the database
      */
     private void CreateEvent(){
-        // TODO: Get changes from data fields on UI, update the server
+        // Get data from fields
+        // Name
+        EditText text = view.findViewById(R.id.txtField_HEEventName);
+        details.setEventTitle(text.getText().toString());
+        // Location
+        text = view.findViewById(R.id.txtField_HEEventLocation);
+        details.setEventAddress(text.getText().toString());
+        // Date
+        text = view.findViewById(R.id.txtField_HEDate);
+        details.setEventDate(text.getText().toString());
+        // Start Time
+        text = view.findViewById(R.id.txtField_HEStartTime);
+        details.setEventStartTime(text.getText().toString());
+        // End Time
+        text = view.findViewById(R.id.txtField_HEEndTime);
+        details.setEventEndTime(text.getText().toString());
+        // Desc
+        text = view.findViewById(R.id.txtField_HEDescription);
+        details.setEventDescription(text.getText().toString());
+
+        // Get the user
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+
+        // Store User Data
+        details.setEventHostID(fbuser.getUid());
+        details.setHostDisplayName(account.getDisplayName());
+        details.setProfilePictureURL(account.getPhotoUrl().toString());
+
+        // Failed the validity check
+        if (!details.CheckValidity()){
+            Toast.makeText(getActivity().getApplicationContext(), "Invalid Inputs Found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Push to server if inputs valid
+        DatabaseManager.GetInstance().AddData("EventDetails", fbuser.getUid(), details);
     }
 }

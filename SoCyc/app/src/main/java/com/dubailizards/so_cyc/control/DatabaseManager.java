@@ -108,11 +108,11 @@ public final class DatabaseManager {
                 "String eventTitle",
                 "String eventAddress",
                 "String eventDescription",
-            1,
-            1,
-            1,
-            1,
-            1);
+            "1",
+            "1/1/1998",
+            "1",
+            "1",
+            "1");
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
 
         AddData("EventDetails",fbuser.getUid(),ed);

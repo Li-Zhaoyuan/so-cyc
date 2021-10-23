@@ -8,7 +8,7 @@
     tools:context=".boundary.dashboard.DashboardFragment">
 
     <TextView
-        android:id="@+id/txt_HEEventName"
+        android:id="@+id/txt_MEEventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtField_HEEventName"
+        android:id="@+id/txtField_MEEventName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -29,90 +29,90 @@
         android:textSize="15dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txt_HEEventName"
-        app:layout_constraintTop_toBottomOf="@+id/txt_HEEventName" />
+        app:layout_constraintStart_toStartOf="@+id/txt_MEEventName"
+        app:layout_constraintTop_toBottomOf="@+id/txt_MEEventName" />
 
     <TextView
-        android:id="@+id/txt_HEEventLocation"
+        android:id="@+id/txt_MEEventLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Where's your event?"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtField_HEEventName"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEEventName" />
+        app:layout_constraintStart_toStartOf="@+id/txtField_MEEventName"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEEventName" />
 
     <EditText
-        android:id="@+id/txtField_HEEventLocation"
+        android:id="@+id/txtField_MEEventLocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Event Address"
-        android:layout_marginEnd="30dp"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txt_HEEventLocation"
-        app:layout_constraintTop_toBottomOf="@+id/txt_HEEventLocation" />
+        app:layout_constraintStart_toStartOf="@+id/txt_MEEventLocation"
+        app:layout_constraintTop_toBottomOf="@+id/txt_MEEventLocation" />
 
     <TextView
-        android:id="@+id/txt_HEEventDateTime"
+        android:id="@+id/txt_MEEventDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="When is your event?"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtField_HEEventLocation"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEEventLocation" />
+        app:layout_constraintStart_toStartOf="@+id/txtField_MEEventLocation"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEEventLocation" />
 
     <EditText
-        android:id="@+id/txtField_HEDate"
+        android:id="@+id/txtField_MEDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Date"
         android:inputType="date"
         android:textSize="15dp"
-        app:layout_constraintStart_toStartOf="@+id/txt_HEEventDateTime"
-        app:layout_constraintTop_toBottomOf="@+id/txt_HEEventDateTime" />
+        app:layout_constraintStart_toStartOf="@+id/txt_MEEventDateTime"
+        app:layout_constraintTop_toBottomOf="@+id/txt_MEEventDateTime" />
 
     <EditText
-        android:id="@+id/txtField_HEStartTime"
+        android:id="@+id/txtField_MEStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Start Time"
         android:inputType="time"
         android:textSize="15dp"
-        app:layout_constraintStart_toStartOf="@+id/txtField_HEDate"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEDate" />
+        app:layout_constraintStart_toStartOf="@+id/txtField_MEDate"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEDate" />
 
     <EditText
-        android:id="@+id/txtField_HEEndTime"
+        android:id="@+id/txtField_MEEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="End Time"
         android:inputType="time"
         android:textSize="15dp"
-        app:layout_constraintStart_toEndOf="@+id/txtField_HEStartTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEDate" />
+        app:layout_constraintStart_toEndOf="@+id/txtField_MEStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEDate" />
 
     <TextView
-        android:id="@+id/txt_HEEventDescription"
+        android:id="@+id/txt_MEEventDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="What is your event about?"
         android:textSize="20dp"
-        android:layout_marginTop="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtField_HEStartTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEStartTime" />
+        app:layout_constraintStart_toStartOf="@+id/txtField_MEStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEStartTime" />
 
     <EditText
-        android:id="@+id/txtField_HEDescription"
+        android:id="@+id/txtField_MEDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -123,11 +123,11 @@
         android:textSize="15dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txt_HEEventDescription"
-        app:layout_constraintTop_toBottomOf="@+id/txt_HEEventDescription" />
+        app:layout_constraintStart_toStartOf="@+id/txt_MEEventDescription"
+        app:layout_constraintTop_toBottomOf="@+id/txt_MEEventDescription" />
 
     <Button
-        android:id="@+id/btn_HEcancel"
+        android:id="@+id/btn_MEcancel"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -135,17 +135,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEDescription" />
 
     <Button
-        android:id="@+id/btn_HEcreate"
+        android:id="@+id/btn_MEupdate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="CREATE EVENT"
+        android:text="UPDATE EVENT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtField_HEDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/txtField_MEDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
