@@ -44,6 +44,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.errorprone.annotations.ForOverride;
+import com.google.maps.android.collections.GroundOverlayManager;
+import com.google.maps.android.collections.MarkerManager;
+import com.google.maps.android.collections.PolygonManager;
+import com.google.maps.android.collections.PolylineManager;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Layer;
 import com.google.android.gms.maps.model.Polyline;
@@ -75,10 +79,13 @@ public class NavigationFragment extends Fragment {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 23;
 
-    private MarkerOptions place1, place2;
     private Polyline currentPolyline;
 
     GoogleMap gMap = null;
+    MarkerManager markerManager;
+    GroundOverlayManager groundOverlayManager;
+    PolygonManager polygonManager;
+    PolylineManager polylineManager;
     LatLng userLocation;
 
     HashMap<layerType, GeoJsonLayer> markersLayers = new HashMap<layerType, GeoJsonLayer>();
@@ -115,6 +122,11 @@ public class NavigationFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 //When map is loaded
                 gMap = googleMap;
+                markerManager = new MarkerManager(gMap);
+                groundOverlayManager = new GroundOverlayManager(gMap);
+                polygonManager = new PolygonManager(gMap);
+                polylineManager = new PolylineManager(gMap);
+
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -172,7 +184,7 @@ public class NavigationFragment extends Fragment {
         if (gMap == null)
             return;
 
-        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
+        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj, markerManager, polygonManager, polylineManager, groundOverlayManager);
         markersLayers.put(layerType, layer);
 
         GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
