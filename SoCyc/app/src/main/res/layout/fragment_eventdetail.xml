@@ -21,14 +21,15 @@
 
     <EditText
         android:id="@+id/txtField_EDEventName"
-        android:layout_width="wrap_content"
+        android:layout_width="0"
+        android:layout_marginEnd="30dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:ems="10"
-        android:hint="Event Name"
         android:enabled="false"
+        android:hint="Event Name"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_EDEventName"
         app:layout_constraintTop_toBottomOf="@+id/txt_EDEventName" />
 
@@ -45,13 +46,15 @@
 
     <EditText
         android:id="@+id/txtField_EDEventLocation"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Event Address"
         android:enabled="false"
+        android:hint="Event Address"
+        android:layout_marginEnd="30dp"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_EDEventLocation"
         app:layout_constraintTop_toBottomOf="@+id/txt_EDEventLocation" />
 
@@ -115,15 +118,17 @@
 
     <EditText
         android:id="@+id/txtField_EDDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="0"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Event Description"
         android:enabled="false"
+        android:hint="Event Description"
+        android:layout_marginEnd="30dp"
         android:inputType="textMultiLine"
         android:lines="5"
         android:maxLines="5"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_EDEventDescription"
         app:layout_constraintTop_toBottomOf="@+id/txt_EDEventDescription" />
 

@@ -21,13 +21,14 @@
 
     <EditText
         android:id="@+id/txtField_HEEventName"
-        android:layout_width="wrap_content"
+        android:layout_width="0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:ems="10"
         android:hint="Event Name"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_HEEventName"
         app:layout_constraintTop_toBottomOf="@+id/txt_HEEventName" />
 
@@ -44,12 +45,14 @@
 
     <EditText
         android:id="@+id/txtField_HEEventLocation"
-        android:layout_width="wrap_content"
+        android:layout_width="0"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Event Address"
+        android:layout_marginEnd="30dp"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_HEEventLocation"
         app:layout_constraintTop_toBottomOf="@+id/txt_HEEventLocation" />
 
@@ -110,7 +113,7 @@
 
     <EditText
         android:id="@+id/txtField_HEDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="0"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Event Description"
@@ -118,6 +121,8 @@
         android:lines="5"
         android:maxLines="5"
         android:textSize="15dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_HEEventDescription"
         app:layout_constraintTop_toBottomOf="@+id/txt_HEEventDescription" />
 

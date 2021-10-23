@@ -1,6 +1,7 @@
 package com.dubailizards.so_cyc.boundary.dashboard;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -101,7 +104,10 @@ public class DashboardFragment extends Fragment {
         });
 
         // Set up list of events
-        GetJoinedEventList();
+        GetPublicEventList();
+        // On complete gets the list of joined events
+        // On complete sets up the list view
+
         // Return the fragment's view
         return view;
     }
@@ -133,7 +139,7 @@ public class DashboardFragment extends Fragment {
                         Log.d("DashboardFragment", "DocumentSnapshot data: " + document.getData());
                         ArrayList arr = (ArrayList)(document.getData().get("eventIDs"));
                         //do stuff with array
-                        DisplayJoinedEventList();
+                        DisplayJoinedEventList(arr);
 
                     } else {
                         Log.d("DashboardFragment", "No such document");
@@ -147,23 +153,63 @@ public class DashboardFragment extends Fragment {
     }
 
     /**
+     *  private void function, Gets List of all public events
+     *  Writes the list of events into an array of EventDetails Type
+     */
+    private void GetPublicEventList(){
+        DatabaseManager.GetInstance().GetFireStore().collection("EventDetails")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("DatabaseManager", document.getId() + " => " + document.getData());
+                                //insert code here
+                                //document.getId() -> ID of host
+                                //document.getData() ->  EventDetails of the event
+                                EventDetails ed = document.toObject(EventDetails.class);
+                                eventDetailsList.add(ed);
+                            }
+                            GetJoinedEventList(); // Get the list of joined events
+                        } else {
+                            Log.d("DatabaseManager", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    /**
      *  private void function, Displays events as UI
      *  Makes use of events in the list and draws them as UI elements
      */
-    private void DisplayJoinedEventList(){
-        // Get the events that this user has joined from the DB
-        //GetJoinedEventList();
+    private void DisplayJoinedEventList(List<String> joined){
+        // Construct a list of event details that this current user has joined
         // From the list of events generate the rows for the listview
-        ListView lv = view.findViewById(R.id.list_dashboardlist);
+        if (joined.size() == 0)
+            return; // Didn't join any
 
-        CustomListViewAdapter adapter = new CustomListViewAdapter(getActivity(), eventDetailsList.toArray(new EventDetails[eventDetailsList.size()]));
+        // Find the events that the user has joined put them in a list
+        List<EventDetails> joinedEvents = new ArrayList<EventDetails>();
+        for (String join : joined){
+            for (EventDetails event : eventDetailsList){
+                if (event.getEventHostID().equals(join)){
+                    Log.d("Check Join: ", "HIT");
+                    joinedEvents.add(event);
+                }
+                Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
+            }
+        }
+
+        ListView lv = view.findViewById(R.id.list_dashboardlist);
+        CustomListViewAdapter adapter = new CustomListViewAdapter(getActivity(), joinedEvents.toArray(new EventDetails[joinedEvents.size()]));
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                   // TODO Row press logic to open event details UI
                   Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
-                  DisplayEventDetailUI(eventDetailsList.get(position));
+                  DisplayEventDetailUI(joinedEvents.get(position));
               }
         });
     }
