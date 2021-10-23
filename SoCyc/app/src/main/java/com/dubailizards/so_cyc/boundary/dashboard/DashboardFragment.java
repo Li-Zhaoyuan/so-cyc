@@ -171,7 +171,7 @@ public class DashboardFragment extends Fragment {
     private void DisplayJoinedEventList(List<String> joined){
         // Construct a list of event details that this current user has joined
         // From the list of events generate the rows for the listview
-        if (joined.size() == 0)
+        if (joined == null || joined.size() == 0)
             return; // Didn't join any
 
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -181,6 +181,7 @@ public class DashboardFragment extends Fragment {
         List<EventDetails> joinedEvents = new ArrayList<EventDetails>();
         for (String join : joined){
             for (EventDetails event : eventDetailsList){
+                Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
                 if (event.getEventHostID().equals(join)){
                     //Log.d("Check Join: ", "HIT");
                     joinedEvents.add(event);
@@ -199,7 +200,6 @@ public class DashboardFragment extends Fragment {
             view.findViewById(R.id.btn_hostevent).setVisibility(View.VISIBLE);
             view.findViewById(R.id.btn_manageevent).setVisibility(View.GONE);
         }
-
 
         ListView lv = view.findViewById(R.id.list_dashboardlist);
         CustomListViewAdapter adapter = new CustomListViewAdapter(getActivity(), joinedEvents.toArray(new EventDetails[joinedEvents.size()]));
@@ -249,25 +249,5 @@ public class DashboardFragment extends Fragment {
         EventDetailFragment n = new EventDetailFragment();
         n.SetEventDetails(ed);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
-    }
-
-    /**
-     *  private void function, Gets the host's event, open the event details for it
-     *  When called, find the host's event, open the EventDetailFragment, to show the event details of the event
-     */
-    private void DisplayHostEventDetails(){
-        // TODO: Find the event pertaining to host (MIGHT NOT EVEN NEED THIS)
-        EventDetails temp = new EventDetails();
-        temp.setEventTitle("Host's Event");
-        temp.setEventHostID("???");
-        temp.setEventAddress("NTU");
-        temp.setEventDate("1337");
-        temp.setEventStartTime("1200");
-        temp.setEventEndTime("2200");
-        temp.setEventDescription("Test Desc");
-        eventDetailsList.add(temp);
-
-        // Open the event details page for the event
-        DisplayEventDetailUI(temp);
     }
 }
