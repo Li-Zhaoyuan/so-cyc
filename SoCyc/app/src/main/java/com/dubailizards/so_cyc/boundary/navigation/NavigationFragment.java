@@ -55,12 +55,23 @@ import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Navigation Screen
  *  Displays interactive map making use of Google Maps
  */
 public class NavigationFragment extends Fragment {
+
+    private enum layerType{
+        layer_BikeRack,
+        layer_NationalPark,
+        layer_HawkerCentre,
+
+        layer_num
+    }
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 23;
 
@@ -70,7 +81,7 @@ public class NavigationFragment extends Fragment {
     GoogleMap gMap = null;
     LatLng userLocation;
 
-    ArrayList<GeoJsonLayer> markersLayers = new ArrayList<GeoJsonLayer>();
+    HashMap<layerType, GeoJsonLayer> markersLayers = new HashMap<layerType, GeoJsonLayer>();
 
     TaskLoadedCallback callback = new TaskLoadedCallback() {
         @Override
@@ -130,7 +141,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_YELLOW, true);
+                                CreateLayer(response, layerType.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -138,7 +149,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_GREEN, true);
+                                CreateLayer(response, layerType.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -146,7 +157,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_ORANGE, true);
+                                CreateLayer(response, layerType.layer_HawkerCentre, BitmapDescriptorFactory.HUE_ORANGE, true);
                             }
                         });
             }
@@ -156,13 +167,13 @@ public class NavigationFragment extends Fragment {
         return view;
     }
 
-    private void CreateLayer(JSONObject obj, float color, boolean displayOnCreate)
+    private void CreateLayer(JSONObject obj, layerType layerType, float color, boolean displayOnCreate)
     {
         if (gMap == null)
             return;
 
         GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
-        markersLayers.add(layer);
+        markersLayers.put(layerType, layer);
 
         GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
         pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(color));
