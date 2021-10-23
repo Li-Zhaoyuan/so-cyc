@@ -101,7 +101,7 @@ public class NavigationFragment extends Fragment {
             if (currentPolyline != null)
                 currentPolyline.remove();
             currentPolyline = gMap.addPolyline((PolylineOptions) values[0]);
-            currentPolyline.setColor(getContext().getResources().getColor(R.color.red_a100));
+            currentPolyline.setColor(getContext().getResources().getColor(R.color.red_a400));
         }
     };
 
@@ -259,7 +259,6 @@ public class NavigationFragment extends Fragment {
             @Override
             public void onFeatureClick(Feature feature) {
                 GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
-                Toast.makeText(getContext(), "Position is: " + point.getCoordinates().toString(), Toast.LENGTH_LONG).show();
 
                 String url = getUrl(userLocation, point.getCoordinates(), "walking");
                 new FetchURL(callback).execute(url, "walking");

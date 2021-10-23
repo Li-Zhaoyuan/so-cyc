@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.EventDetailFragment;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -231,7 +233,9 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayHostEventUI(){
         HostEventFragment n = new HostEventFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -240,7 +244,9 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayManageEventUI(){
         ManageEventFragment n = new ManageEventFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -249,7 +255,9 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayPublicEventUI(){
         PublicEventFragment n = new PublicEventFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -260,6 +268,8 @@ public class DashboardFragment extends Fragment {
     private void DisplayEventDetailUI(EventDetails ed){
         EventDetailFragment n = new EventDetailFragment();
         n.SetEventDetails(ed);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 }
