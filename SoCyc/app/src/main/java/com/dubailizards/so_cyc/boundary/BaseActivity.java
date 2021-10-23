@@ -21,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  *  Boundary Class, UI that updates based on bottom navigation bar
  *  Loads screen Fragments depending on the pressed button of navigation bar
  */
-public class BaseActivity extends AppCompatActivity implements TaskLoadedCallback {
+public class BaseActivity extends AppCompatActivity{
 
     /**
      *  private ActivityBaseBinding variable
@@ -51,13 +51,5 @@ public class BaseActivity extends AppCompatActivity implements TaskLoadedCallbac
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
-    }
-
-    @Override
-    public void onTaskDone(Object... values) {
-//        System.out.println("Hello");
-//        FragmentManager manager = getSupportFragmentManager();
-//        NavigationFragment fragment = (NavigationFragment) manager.findFragmentById(R.id.);
-//        fragment.onTaskDone();
     }
 }
