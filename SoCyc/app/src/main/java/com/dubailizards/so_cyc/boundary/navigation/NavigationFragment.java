@@ -2,6 +2,7 @@ package com.dubailizards.so_cyc.boundary.navigation;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.errorprone.annotations.ForOverride;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Layer;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
@@ -49,27 +51,6 @@ public class NavigationFragment extends Fragment {
 
     ArrayList<GeoJsonLayer> markersLayers = new ArrayList<GeoJsonLayer>();
 
-    private void CreateLayer(JSONObject obj, float color, boolean displayOnCreate)
-    {
-        if (gMap == null)
-            return;
-        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
-        markersLayers.add(layer);
-
-        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
-        pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(color));
-
-        layer.setOnFeatureClickListener(new GeoJsonLayer.GeoJsonOnFeatureClickListener() {
-            @Override
-            public void onFeatureClick(Feature feature) {
-                GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
-                Toast.makeText(getContext(), "Position is: " + point.getCoordinates().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        if (displayOnCreate)
-            layer.addLayerToMap();
-    }
     /**
      *  private FragmentNavigationBinding variable
      *  Auto generated class type that represents the binding between XML layout file and data objects
@@ -87,8 +68,7 @@ public class NavigationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
         //Initialize map fragment
-        SupportMapFragment supportMapFragment = (SupportMapFragment)
-                getChildFragmentManager().findFragmentById(R.id.google_map);
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
 
         //Async map
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -110,6 +90,14 @@ public class NavigationFragment extends Fragment {
                             @Override
                             public void onResponse(JSONObject response) {
                                 CreateLayer(response, BitmapDescriptorFactory.HUE_GREEN, true);
+                            }
+                        });
+                APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
+                        "https://geo.data.gov.sg/hawkercentre/2021/09/01/geojson/hawkercentre.geojson",
+                        new APIListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                CreateLayer(response, BitmapDescriptorFactory.HUE_ORANGE, true);
                             }
                         });
 
@@ -150,7 +138,28 @@ public class NavigationFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
-//        return root;
+    }
+
+    private void CreateLayer(JSONObject obj, float color, boolean displayOnCreate)
+    {
+        if (gMap == null)
+            return;
+        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
+        markersLayers.add(layer);
+
+        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
+        pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(color));
+
+        layer.setOnFeatureClickListener(new GeoJsonLayer.GeoJsonOnFeatureClickListener() {
+            @Override
+            public void onFeatureClick(Feature feature) {
+                GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
+                Toast.makeText(getContext(), "Position is: " + point.getCoordinates().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        if (displayOnCreate)
+            layer.addLayerToMap();
     }
 
     /**
@@ -161,5 +170,6 @@ public class NavigationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        gMap = null;
     }
 }
