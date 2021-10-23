@@ -149,8 +149,8 @@ public class ManageEventFragment extends Fragment {
         details.setProfilePictureURL(account.getPhotoUrl().toString());
 
         // Failed the validity check
-        if (!details.CheckValidity()){
-            Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields!", Toast.LENGTH_SHORT).show();
+        if (details.CheckValidity() != ""){
+            Toast.makeText(getActivity().getApplicationContext(), details.CheckValidity(), Toast.LENGTH_SHORT).show();
             return;
         }
         // Push to server if inputs valid
