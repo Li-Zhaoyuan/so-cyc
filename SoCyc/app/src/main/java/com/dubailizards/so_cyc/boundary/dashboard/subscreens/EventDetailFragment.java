@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
+import com.dubailizards.so_cyc.boundary.dashboard.DashboardFragment;
 import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.dubailizards.so_cyc.entity.UserDetails;
@@ -63,6 +64,7 @@ public class EventDetailFragment extends Fragment {
             @Override
             public void onClick(View view){
                 UpdateJoinEvent();
+                DisplayDashboardUI();
             }
         });
 
@@ -71,6 +73,7 @@ public class EventDetailFragment extends Fragment {
             @Override
             public void onClick(View view){
                 UpdateLeaveEvent();
+                DisplayDashboardUI();
             }
         });
 
@@ -129,6 +132,20 @@ public class EventDetailFragment extends Fragment {
         super.onDestroyView();
     }
 
+    /**
+     *  private void function, Returns to dashboard fragment
+     *  When called, open the DashboardFragment
+     */
+    private void DisplayDashboardUI(){
+        DashboardFragment n = new DashboardFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+    }
+
+    /**
+     *  public void function, sets the local EventDetails
+     * @param event is the passed EventDetails object
+     *  When called, set the internal details object to the passed one
+     */
     public void SetEventDetails(EventDetails event){
         details = event;
     }
