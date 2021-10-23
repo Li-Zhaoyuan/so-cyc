@@ -231,7 +231,7 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayHostEventUI(){
         HostEventFragment n = new HostEventFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -240,7 +240,7 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayManageEventUI(){
         ManageEventFragment n = new ManageEventFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -249,7 +249,7 @@ public class DashboardFragment extends Fragment {
      */
     private void DisplayPublicEventUI(){
         PublicEventFragment n = new PublicEventFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
@@ -260,6 +260,6 @@ public class DashboardFragment extends Fragment {
     private void DisplayEventDetailUI(EventDetails ed){
         EventDetailFragment n = new EventDetailFragment();
         n.SetEventDetails(ed);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 }
