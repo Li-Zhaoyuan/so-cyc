@@ -55,6 +55,7 @@ public class ManageEventFragment extends Fragment {
         //super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_manageevent, container, false);
         ((BaseActivity)getActivity()).setActionBarTitle("Manage Event"); // Rename the title
+
         // Initiallize Event Details Object
         details = new EventDetails();
 
@@ -105,7 +106,7 @@ public class ManageEventFragment extends Fragment {
     private void UpdateEventData(){
         // Get data from fields
         // Name
-        EditText text = view.findViewById(R.id.txt_MEEventName);
+        EditText text = view.findViewById(R.id.txtField_MEEventName);
         details.setEventTitle(text.getText().toString());
         // Location
         text = view.findViewById(R.id.txtField_MEEventLocation);
@@ -134,7 +135,7 @@ public class ManageEventFragment extends Fragment {
 
         // Failed the validity check
         if (!details.CheckValidity()){
-            Toast.makeText(getActivity().getApplicationContext(), "Invalid Inputs Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields!", Toast.LENGTH_SHORT).show();
             return;
         }
         // Push to server if inputs valid

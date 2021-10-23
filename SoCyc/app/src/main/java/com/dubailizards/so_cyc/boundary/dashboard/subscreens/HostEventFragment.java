@@ -117,7 +117,7 @@ public class HostEventFragment extends Fragment {
 
         // Failed the validity check
         if (!details.CheckValidity()){
-            Toast.makeText(getActivity().getApplicationContext(), "Invalid Inputs Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields!", Toast.LENGTH_SHORT).show();
             return;
         }
         // Push to server if inputs valid
