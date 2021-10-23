@@ -25,9 +25,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.data.Feature;
+import com.google.maps.android.data.Layer;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
+import com.google.maps.android.data.geojson.GeoJsonPoint;
+import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 
 import org.json.JSONObject;
 
@@ -43,16 +49,27 @@ public class NavigationFragment extends Fragment {
 
     ArrayList<GeoJsonLayer> markersLayers = new ArrayList<GeoJsonLayer>();
 
-    APIListener markersLayerListener = new APIListener() {
-        @Override
-        public void onResponse(JSONObject response) {
-            if (gMap == null)
-                return;
-            GeoJsonLayer layer = new GeoJsonLayer(gMap, response);
-            markersLayers.add(layer);
+    private void CreateLayer(JSONObject obj, float color, boolean displayOnCreate)
+    {
+        if (gMap == null)
+            return;
+        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
+        markersLayers.add(layer);
+
+        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
+        pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(color));
+
+        layer.setOnFeatureClickListener(new GeoJsonLayer.GeoJsonOnFeatureClickListener() {
+            @Override
+            public void onFeatureClick(Feature feature) {
+                GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
+                Toast.makeText(getContext(), "Position is: " + point.getCoordinates().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        if (displayOnCreate)
             layer.addLayerToMap();
-        }
-    };
+    }
     /**
      *  private FragmentNavigationBinding variable
      *  Auto generated class type that represents the binding between XML layout file and data objects
@@ -81,10 +98,20 @@ public class NavigationFragment extends Fragment {
                 gMap = googleMap;
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                         "https://geo.data.gov.sg/bicyclerack/2021/07/12/geojson/bicyclerack.geojson",
-                        markersLayerListener);
+                        new APIListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                CreateLayer(response, BitmapDescriptorFactory.HUE_BLUE, true);
+                            }
+                        });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                         "https://geo.data.gov.sg/nationalparks/2020/04/24/geojson/nationalparks.geojson",
-                        markersLayerListener);
+                        new APIListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                CreateLayer(response, BitmapDescriptorFactory.HUE_GREEN, true);
+                            }
+                        });
 
 //                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
 //                    @Override
