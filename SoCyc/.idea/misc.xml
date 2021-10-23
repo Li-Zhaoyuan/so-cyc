@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GITGUD/SoCyc/so-cyc/SoCyc/app/src/main/res/drawable/ic_hawker.xml" value="0.14907407407407408" />
+        <entry key="..\:/GITGUD/SoCyc/so-cyc/SoCyc/app/src/main/res/layout/fragment_navigation.xml" value="0.44144903117101936" />
         <entry key="..\:/Users/lyh_9/Desktop/Study/Year 2 Semester 1/CZ2006 Software Engineering/so-cyc/SoCyc/app/src/main/res/layout/activity_base.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/lyh_9/Desktop/Study/Year 2 Semester 1/CZ2006 Software Engineering/so-cyc/SoCyc/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/lyh_9/Desktop/Study/Year 2 Semester 1/CZ2006 Software Engineering/so-cyc/SoCyc/app/src/main/res/layout/activity_testing.xml" value="0.12239583333333333" />
@@ -21,8 +23,13 @@
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/activity_base.xml" value="0.264" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/activity_main.xml" value="0.173046875" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/activity_testing.xml" value="0.2978142076502732" />
+<<<<<<< Updated upstream
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_dashboard.xml" value="0.176" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_eventdetail.xml" value="0.264" />
+=======
+        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_dashboard.xml" value="0.536" />
+        <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_eventdetail.xml" value="0.4" />
+>>>>>>> Stashed changes
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_home.xml" value="0.173046875" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_hostevent.xml" value="0.296195652173913" />
         <entry key="..\:/Workspace/GitKraken/SoCycProj/SoCyc/app/src/main/res/layout/fragment_manageevent.xml" value="0.1" />
