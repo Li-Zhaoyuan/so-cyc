@@ -122,7 +122,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_EventDescription" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_MEcancel"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -133,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtField_Description" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_MEupdate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

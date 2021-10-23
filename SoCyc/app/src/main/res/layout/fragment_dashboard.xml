@@ -27,6 +27,16 @@
         app:layout_constraintTop_toTopOf="@+id/btn_hostevent" />
 
     <Button
+        android:id="@+id/btn_publicevent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Browse Public Events"
+        app:layout_constraintEnd_toEndOf="@+id/btn_manageevent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/txt_title1"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
         android:id="@+id/btn_eventdetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,9 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,8 +18,10 @@ import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.EventDetailFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.HostEventFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.ManageEventFragment;
+import com.dubailizards.so_cyc.boundary.dashboard.subscreens.PublicEventFragment;
 import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
+import com.dubailizards.so_cyc.entity.CustomListViewAdapter;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +31,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,31 +67,39 @@ public class DashboardFragment extends Fragment {
         // Setup Host Event Button
         // Get the view where UI entities are stored
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        // Initiallize event detail list
+        eventDetailsList = new ArrayList<EventDetails>();
+
         // Set up my entities in the view
         // Host Event
-        Button btn_host = view.findViewById(R.id.btn_hostevent);
-        btn_host.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_hostevent).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 DisplayHostEventUI();
             }
         });
         // Manage Event
-        Button btn_manage = view.findViewById(R.id.btn_manageevent);
-        btn_manage.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_manageevent).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 DisplayManageEventUI();
             }
         });
         // View Event Details
-        Button btn_details = view.findViewById(R.id.btn_eventdetails);
-        btn_details.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_eventdetails).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                DisplayEventDetailUI();
+                DisplayHostEventDetails();
             }
         });
+        // View Public Details
+        view.findViewById(R.id.btn_publicevent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                DisplayPublicEventUI();
+            }
+        });
+
         // Set up list of events
         DisplayJoinedEventList();
         // Return the fragment's view
@@ -108,7 +121,6 @@ public class DashboardFragment extends Fragment {
      *  Writes the list of events into an array of EventDetails Type
      */
     private void GetJoinedEventList(){
-        // TODO: Get the list of events for this user
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference docRef = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -139,14 +151,22 @@ public class DashboardFragment extends Fragment {
      *  Makes use of events in the list and draws them as UI elements
      */
     private void DisplayJoinedEventList(){
-        // TODO: Draw the list of events as UI elements
+        // Get the events that this user has joined from the DB
+        GetJoinedEventList();
         // From the list of events generate the rows for the listview
         ListView lv = view.findViewById(R.id.list_dashboardlist);
-        String[] data = {"1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3","1", "2", "3"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data);
-        lv.setAdapter(adapter);
-    }
 
+        CustomListViewAdapter adapter = new CustomListViewAdapter(getActivity(), eventDetailsList.toArray(new EventDetails[eventDetailsList.size()]));
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+              @Override
+              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                  // TODO Row press logic to open event details UI
+                  Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
+                  DisplayEventDetailUI(eventDetailsList.get(position));
+              }
+        });
+    }
     /**
      *  private void function, Displays the host event UI
      *  When called, open the HostEventFragment, to show the host screen
@@ -166,28 +186,42 @@ public class DashboardFragment extends Fragment {
     }
 
     /**
-     *  private void function, Displays the event detail UI
-     *  When called, open the EventDetailFragment, to show the event detail screen
+     *  private void function, Displays the manage event UI
+     *  When called, open the ManageEventFragment, to show the host screen
      */
-    private void DisplayEventDetailUI(){
-        EventDetailFragment n = new EventDetailFragment();
-        EventDetails temp = new EventDetails();
-        temp.setEventTitle("Test");
-        temp.setEventAddress("NTU");
-        temp.setEventDate("1337");
-        temp.setEventStartTime(1200);
-        temp.setEventEndTime(2200);
-        temp.setEventDescription("Test Desc");
-        // TODO: Input the actual event details from database, Query DB for the event and insert to fragment
-        n.SetEventDetails(temp);
+    private void DisplayPublicEventUI(){
+        PublicEventFragment n = new PublicEventFragment();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
-     *  private void function, Displays a popup to show event details
-     *  @param eventID is the ID of the event we want the details of
+     *  private void function, Displays the event detail UI
+     * @param ed the passed event details object to set up the detail screen
+     *  When called, open the EventDetailFragment, to show the event detail screen
      */
-    private void DisplayEventDetails(int eventID){
-        // TODO: Implement popup of event details, opens EventDetailFragment
+    private void DisplayEventDetailUI(EventDetails ed){
+        EventDetailFragment n = new EventDetailFragment();
+        n.SetEventDetails(ed);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+    }
+
+    /**
+     *  private void function, Gets the host's event, open the event details for it
+     *  When called, find the host's event, open the EventDetailFragment, to show the event details of the event
+     */
+    private void DisplayHostEventDetails(){
+        // TODO: Find the event pertaining to host
+        EventDetails temp = new EventDetails();
+        temp.setEventTitle("Host's Event");
+        temp.setEventHostID("???");
+        temp.setEventAddress("NTU");
+        temp.setEventDate("1337");
+        temp.setEventStartTime("1200");
+        temp.setEventEndTime("2200");
+        temp.setEventDescription("Test Desc");
+        eventDetailsList.add(temp);
+
+        // Open the event details page for the event
+        DisplayEventDetailUI(temp);
     }
 }
