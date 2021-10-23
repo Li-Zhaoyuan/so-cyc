@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +70,7 @@ import java.util.Map;
  */
 public class NavigationFragment extends Fragment {
 
-    private enum layerType{
+    private enum LAYERTYPE{
         layer_BikeRack,
         layer_NationalPark,
         layer_HawkerCentre,
@@ -81,6 +82,10 @@ public class NavigationFragment extends Fragment {
 
     private Polyline currentPolyline;
 
+    private ImageButton btnPark;
+    private ImageButton btnBike;
+    private ImageButton btnHawker;
+
     GoogleMap gMap = null;
     MarkerManager markerManager;
     GroundOverlayManager groundOverlayManager;
@@ -88,7 +93,7 @@ public class NavigationFragment extends Fragment {
     PolylineManager polylineManager;
     LatLng userLocation;
 
-    HashMap<layerType, GeoJsonLayer> markersLayers = new HashMap<layerType, GeoJsonLayer>();
+    HashMap<LAYERTYPE, GeoJsonLayer> markersLayers = new HashMap<LAYERTYPE, GeoJsonLayer>();
 
     TaskLoadedCallback callback = new TaskLoadedCallback() {
         @Override
@@ -153,7 +158,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, layerType.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
+                                CreateLayer(response, LAYERTYPE.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -161,7 +166,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, layerType.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, true);
+                                CreateLayer(response, LAYERTYPE.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, false);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -169,17 +174,77 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, layerType.layer_HawkerCentre, BitmapDescriptorFactory.HUE_ORANGE, true);
+                                CreateLayer(response, LAYERTYPE.layer_HawkerCentre, BitmapDescriptorFactory.HUE_CYAN, false);
                             }
                         });
             }
         });
 
+        btnBike = (ImageButton) view.findViewById(R.id.toggle_bike);;
+        btnPark = (ImageButton) view.findViewById(R.id.toggle_park);;
+        btnHawker = (ImageButton) view.findViewById(R.id.toggle_hawker);;
+
+        btnBike.setBackgroundColor(Color.YELLOW);
+
+        btnBike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(markersLayers.get(LAYERTYPE.layer_BikeRack).isLayerOnMap())
+                {
+                    btnBike.setBackgroundColor(Color.WHITE);
+                    markersLayers.get(LAYERTYPE.layer_BikeRack).removeLayerFromMap();
+                }
+                else
+                {
+                    btnBike.setBackgroundColor(Color.YELLOW);
+                    markersLayers.get(LAYERTYPE.layer_BikeRack).addLayerToMap();
+                }
+
+            }
+
+        });
+
+         btnPark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(markersLayers.get(LAYERTYPE.layer_NationalPark).isLayerOnMap())
+                {
+                    btnPark.setBackgroundColor(Color.WHITE);
+                    markersLayers.get(LAYERTYPE.layer_NationalPark).removeLayerFromMap();
+                }
+                else
+                {
+                    btnPark.setBackgroundColor(Color.GREEN);
+                    markersLayers.get(LAYERTYPE.layer_NationalPark).addLayerToMap();
+                }
+            }
+        });
+
+        btnHawker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(markersLayers.get(LAYERTYPE.layer_HawkerCentre).isLayerOnMap())
+                {
+                    btnHawker.setBackgroundColor(Color.WHITE);
+                    markersLayers.get(LAYERTYPE.layer_HawkerCentre).removeLayerFromMap();
+                }
+                else
+                {
+                    btnHawker.setBackgroundColor(getContext().getResources().getColor(R.color.teal_200));
+                    markersLayers.get(LAYERTYPE.layer_HawkerCentre).addLayerToMap();
+                }
+            }
+        });
+
+
         //Return view
         return view;
     }
 
-    private void CreateLayer(JSONObject obj, layerType layerType, float color, boolean displayOnCreate)
+    private void CreateLayer(JSONObject obj, LAYERTYPE layerType, float color, boolean displayOnCreate)
     {
         if (gMap == null)
             return;
