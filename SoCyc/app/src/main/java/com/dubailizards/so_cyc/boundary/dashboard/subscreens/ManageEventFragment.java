@@ -93,6 +93,8 @@ public class ManageEventFragment extends Fragment {
      */
     private void DeleteEventData() {
         // TODO: Delete the current user's event
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseManager.GetInstance().DeleteData("EventDetails", fbuser.getUid());
     }
 
     /**
