@@ -1,6 +1,7 @@
 package com.dubailizards.so_cyc.boundary.dashboard.subscreens;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,20 @@ import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
 import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
+import com.dubailizards.so_cyc.entity.UserDetails;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents a screen of the Dashboard
@@ -73,7 +84,48 @@ public class EventDetailFragment extends Fragment {
 
         // TODO: Get the status of whether user has already joined this event
         // Hide the join and cancel button if user is already in event
-        SetupEventDetailFragment(details,false);
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        Log.d("EventDetailFragment", "DocumentSnapshot data: " + document.getData());
+                        ArrayList arr = (ArrayList)(document.getData().get("eventIDs"));
+                        //do stuff with array
+                        if(arr != null) {
+                            if(arr.contains(details.getEventHostID()))
+                            {
+                                SetupEventDetailFragment(details, true);
+
+                                Log.d("EventDetailFragment", "In event");
+                            }
+                            else
+                            {
+                                SetupEventDetailFragment(details, false);
+                                Log.d("EventDetailFragment", "Not in event");
+                            }
+                        }
+                        else
+                        {
+                            SetupEventDetailFragment(details, false);
+                            Log.d("EventDetailFragment", "Not in event");
+                        }
+                    } else {
+                        Log.d("EventDetailFragment", "No such document, not in event");
+                        SetupEventDetailFragment(details,false);
+                    }
+
+                } else {
+                    Log.d("EventDetailFragment", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //SetupEventDetailFragment(details,false);
         return view;
     }
 
@@ -100,8 +152,15 @@ public class EventDetailFragment extends Fragment {
         // copy the passed details to this class
         details = event;
         if (userInEvent) // User is already in event
+        {
             view.findViewById(R.id.btn_EDjoin).setVisibility(View.GONE);
-        else view.findViewById(R.id.btn_EDleave).setVisibility(View.GONE);
+            view.findViewById(R.id.btn_EDleave).setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            view.findViewById(R.id.btn_EDleave).setVisibility(View.GONE);
+            view.findViewById(R.id.btn_EDjoin).setVisibility(View.VISIBLE);
+        }
 
         // Setup event details
         // Name
@@ -134,8 +193,28 @@ public class EventDetailFragment extends Fragment {
     private void UpdateJoinEvent(){
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
+        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
 
-        ref.update("eventIDs", FieldValue.arrayUnion(details.getEventHostID()));
+                        Log.d("EventDeatilFragment", "DocumentSnapshot data: " + document.getData());
+                        ref.update("eventIDs", FieldValue.arrayUnion(details.getEventHostID()));
+                    } else {
+                        Log.d("EventDeatilFragment", "No such document");
+                        Map<String, Object> event = new HashMap<>();
+                        event.put("eventIDs", Arrays.asList(details.getEventHostID()));
+                        DatabaseManager.GetInstance().AddData("JoinedEvent",fbuser.getUid(),event);
+                    }
+
+                } else {
+                    Log.d("EventDeatilFragment", "get failed with ", task.getException());
+                }
+            }
+        });
+
     }
 
     /**

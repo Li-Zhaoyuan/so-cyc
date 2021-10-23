@@ -131,7 +131,7 @@ public class DashboardFragment extends Fragment {
                     if (document.exists()) {
 
                         Log.d("DashboardFragment", "DocumentSnapshot data: " + document.getData());
-                        Array arr = (Array)(document.getData().get("eventIDs"));
+                        ArrayList arr = (ArrayList)(document.getData().get("eventIDs"));
                         //do stuff with array
                         DisplayJoinedEventList();
 
