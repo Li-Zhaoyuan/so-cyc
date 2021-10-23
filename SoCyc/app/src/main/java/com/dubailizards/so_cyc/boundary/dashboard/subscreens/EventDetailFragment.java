@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -73,7 +74,6 @@ public class EventDetailFragment extends Fragment {
             }
         });
 
-        // TODO: Get the status of whether user has already joined this event
         // Hide the join and cancel button if user is already in event
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference docRef = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
@@ -190,18 +190,18 @@ public class EventDetailFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-
-                        Log.d("EventDeatilFragment", "DocumentSnapshot data: " + document.getData());
+                        Log.d("EventDetailFragment", "DocumentSnapshot data: " + document.getData());
                         ref.update("eventIDs", FieldValue.arrayUnion(details.getEventHostID()));
                     } else {
-                        Log.d("EventDeatilFragment", "No such document");
+                        Log.d("EventDetailFragment", "No such document");
                         Map<String, Object> event = new HashMap<>();
                         event.put("eventIDs", Arrays.asList(details.getEventHostID()));
                         DatabaseManager.GetInstance().AddData("JoinedEvent",fbuser.getUid(),event);
                     }
-
+                    Toast.makeText(getActivity().getApplicationContext(), "Joined Event!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.d("EventDeatilFragment", "get failed with ", task.getException());
+                    Log.d("EventDetailFragment", "get failed with ", task.getException());
+                    Toast.makeText(getActivity().getApplicationContext(), "Error: Cannot Join Event!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -217,5 +217,6 @@ public class EventDetailFragment extends Fragment {
         DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
 
         ref.update("eventIDs", FieldValue.arrayRemove(details.getEventHostID()));
+        Toast.makeText(getActivity().getApplicationContext(), "Left Event!", Toast.LENGTH_SHORT).show();
     }
 }

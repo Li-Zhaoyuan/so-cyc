@@ -63,7 +63,7 @@ public class DashboardFragment extends Fragment {
         // Setup Host Event Button
         // Get the view where UI entities are stored
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        // Initiallize event detail list
+        // Initialize event detail list
         eventDetailsList = new ArrayList<EventDetails>();
 
         // Set up my entities in the view
@@ -220,8 +220,7 @@ public class DashboardFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  // TODO Row press logic to open event details UI
-                  Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
                   DisplayEventDetailUI(joinedEvents.get(position));
               }
         });

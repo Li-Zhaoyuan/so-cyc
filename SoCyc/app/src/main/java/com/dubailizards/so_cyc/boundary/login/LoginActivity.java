@@ -66,16 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Find my skip button
-        Button Btn_SkipLogin = findViewById(R.id.skip_login);
-        // Link this button with a listener to transit screens if clicked
-        Btn_SkipLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwitchActivities(1);
-            }
-        });
-
         // Find my map test button
         Button Btn_MapTest = findViewById(R.id.map_test);
         // Link this button with a listener to transit screens if clicked

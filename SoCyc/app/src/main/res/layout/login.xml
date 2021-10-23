@@ -21,26 +21,14 @@
         app:layout_constraintVertical_bias="0.667" />
 
     <Button
-        android:id="@+id/skip_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Skip Login"
-        app:layout_constraintTop_toBottomOf="@+id/google_singIn"
-        app:layout_constraintLeft_toLeftOf="@+id/google_singIn"
-        app:layout_constraintRight_toRightOf="@+id/google_singIn"
-        ></Button>
-
-    <Button
         android:id="@+id/map_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="Test Map Activity"
-        app:layout_constraintTop_toBottomOf="@+id/skip_login"
-        app:layout_constraintLeft_toLeftOf="@+id/skip_login"
-        app:layout_constraintRight_toRightOf="@+id/skip_login"
-        ></Button>
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/google_singIn"
+        app:layout_constraintStart_toStartOf="@+id/google_singIn"
+        app:layout_constraintTop_toBottomOf="@+id/google_singIn"></Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -117,8 +117,7 @@ public class PublicEventFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO Row press logic to open event details UI
-                Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
                 DisplayEventDetailUI(eventDetailsList.get(position));
             }
         });
