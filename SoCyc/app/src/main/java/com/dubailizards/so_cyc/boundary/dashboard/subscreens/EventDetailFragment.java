@@ -73,15 +73,6 @@ public class EventDetailFragment extends Fragment {
             }
         });
 
-        // Cancel Button
-        view.findViewById(R.id.btn_EDcancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                //DashboardFragment n = new DashboardFragment();
-                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
-            }
-        });
-
         // TODO: Get the status of whether user has already joined this event
         // Hide the join and cancel button if user is already in event
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();

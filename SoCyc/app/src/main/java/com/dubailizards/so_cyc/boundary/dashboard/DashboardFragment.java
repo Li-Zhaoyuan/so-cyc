@@ -21,7 +21,6 @@ import com.dubailizards.so_cyc.boundary.dashboard.subscreens.HostEventFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.ManageEventFragment;
 import com.dubailizards.so_cyc.boundary.dashboard.subscreens.PublicEventFragment;
 import com.dubailizards.so_cyc.control.DatabaseManager;
-import com.dubailizards.so_cyc.databinding.FragmentDashboardBinding;
 import com.dubailizards.so_cyc.entity.CustomListViewAdapter;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,12 +42,6 @@ import java.util.Map;
  *  Displays interactive UI elements in regards to events
  */
 public class DashboardFragment extends Fragment {
-
-    /**
-     *  private FragmentDashboardBinding variable
-     *  Auto generated class type that represents the binding between XML layout file and data objects
-     */
-    private FragmentDashboardBinding binding;
 
     /**
      *  private List<EventDetails> variable
@@ -88,13 +81,6 @@ public class DashboardFragment extends Fragment {
                 DisplayManageEventUI();
             }
         });
-        // View Event Details
-        view.findViewById(R.id.btn_eventdetails).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                DisplayHostEventDetails();
-            }
-        });
         // View Public Details
         view.findViewById(R.id.btn_publicevent).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +105,6 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
     /**
@@ -186,19 +171,34 @@ public class DashboardFragment extends Fragment {
     private void DisplayJoinedEventList(List<String> joined){
         // Construct a list of event details that this current user has joined
         // From the list of events generate the rows for the listview
-        if (joined.size() == 0)
+        if (joined == null || joined.size() == 0)
             return; // Didn't join any
+
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        boolean hasUserMadeEvent = false;
 
         // Find the events that the user has joined put them in a list
         List<EventDetails> joinedEvents = new ArrayList<EventDetails>();
         for (String join : joined){
             for (EventDetails event : eventDetailsList){
+                Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
                 if (event.getEventHostID().equals(join)){
-                    Log.d("Check Join: ", "HIT");
+                    //Log.d("Check Join: ", "HIT");
                     joinedEvents.add(event);
                 }
-                Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
+                //Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
+                // Extra
+                if (fbuser.getUid() == event.getEventHostID())
+                    hasUserMadeEvent = true;
             }
+        }
+        if (!hasUserMadeEvent){
+            view.findViewById(R.id.btn_hostevent).setVisibility(View.GONE);
+            view.findViewById(R.id.btn_manageevent).setVisibility(View.VISIBLE);
+        }
+        else {
+            view.findViewById(R.id.btn_hostevent).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.btn_manageevent).setVisibility(View.GONE);
         }
 
         ListView lv = view.findViewById(R.id.list_dashboardlist);
@@ -249,25 +249,5 @@ public class DashboardFragment extends Fragment {
         EventDetailFragment n = new EventDetailFragment();
         n.SetEventDetails(ed);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
-    }
-
-    /**
-     *  private void function, Gets the host's event, open the event details for it
-     *  When called, find the host's event, open the EventDetailFragment, to show the event details of the event
-     */
-    private void DisplayHostEventDetails(){
-        // TODO: Find the event pertaining to host
-        EventDetails temp = new EventDetails();
-        temp.setEventTitle("Host's Event");
-        temp.setEventHostID("???");
-        temp.setEventAddress("NTU");
-        temp.setEventDate("1337");
-        temp.setEventStartTime("1200");
-        temp.setEventEndTime("2200");
-        temp.setEventDescription("Test Desc");
-        eventDetailsList.add(temp);
-
-        // Open the event details page for the event
-        DisplayEventDetailUI(temp);
     }
 }
