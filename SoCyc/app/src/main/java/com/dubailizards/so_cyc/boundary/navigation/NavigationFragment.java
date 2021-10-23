@@ -116,8 +116,8 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
                 gMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                     @Override
                     public void onMyLocationChange(Location location) {
-                        LatLng latlng=new LatLng(location.getLatitude(),location.getLongitude());
-                        CameraUpdate cameraUpdate= CameraUpdateFactory.newLatLngZoom(
+                        LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                 latlng, 100);
                         gMap.animateCamera(cameraUpdate);
 
@@ -147,6 +147,8 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
                                 CreateLayer(response, BitmapDescriptorFactory.HUE_ORANGE, true);
                             }
                         });
+            }
+        });
 
         //1.3490,103.8391
         //1.3522,103.8372
@@ -155,11 +157,11 @@ public class NavigationFragment extends Fragment implements TaskLoadedCallback {
 
 
         btnGetDirection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = getUrl(place1.getPosition(), place2.getPosition(), "driving");
-                new FetchURL(getActivity()).execute(url, "driving");
-            }
+           @Override
+           public void onClick(View view) {
+               String url = getUrl(place1.getPosition(), place2.getPosition(), "driving");
+               new FetchURL(getActivity()).execute(url, "driving");
+           }
         });
 
         //Return view
