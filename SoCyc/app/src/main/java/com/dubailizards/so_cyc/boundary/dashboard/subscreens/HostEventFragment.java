@@ -1,6 +1,7 @@
 package com.dubailizards.so_cyc.boundary.dashboard.subscreens;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,17 @@ import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents a screen of the Dashboard
@@ -112,5 +122,28 @@ public class HostEventFragment extends Fragment {
         }
         // Push to server if inputs valid
         DatabaseManager.GetInstance().AddData("EventDetails", fbuser.getUid(), details);
+
+        DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
+        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        Log.d("HostEventFragment", "DocumentSnapshot data: " + document.getData());
+                        ref.update("eventIDs", FieldValue.arrayUnion(details.getEventHostID()));
+                    } else {
+                        Log.d("HostEventFragment", "No such document");
+                        Map<String, Object> event = new HashMap<>();
+                        event.put("eventIDs", Arrays.asList(details.getEventHostID()));
+                        DatabaseManager.GetInstance().AddData("JoinedEvent",fbuser.getUid(),event);
+                    }
+
+                } else {
+                    Log.d("HostEventFragment", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 }
