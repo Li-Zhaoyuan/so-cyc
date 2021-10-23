@@ -44,6 +44,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.errorprone.annotations.ForOverride;
+import com.google.maps.android.collections.GroundOverlayManager;
+import com.google.maps.android.collections.MarkerManager;
+import com.google.maps.android.collections.PolygonManager;
+import com.google.maps.android.collections.PolylineManager;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Layer;
 import com.google.android.gms.maps.model.Polyline;
@@ -55,6 +59,9 @@ import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Navigation Screen
@@ -62,15 +69,26 @@ import java.util.ArrayList;
  */
 public class NavigationFragment extends Fragment {
 
+    private enum layerType{
+        layer_BikeRack,
+        layer_NationalPark,
+        layer_HawkerCentre,
+
+        layer_num
+    }
+
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 23;
 
-    private MarkerOptions place1, place2;
     private Polyline currentPolyline;
 
     GoogleMap gMap = null;
+    MarkerManager markerManager;
+    GroundOverlayManager groundOverlayManager;
+    PolygonManager polygonManager;
+    PolylineManager polylineManager;
     LatLng userLocation;
 
-    ArrayList<GeoJsonLayer> markersLayers = new ArrayList<GeoJsonLayer>();
+    HashMap<layerType, GeoJsonLayer> markersLayers = new HashMap<layerType, GeoJsonLayer>();
 
     TaskLoadedCallback callback = new TaskLoadedCallback() {
         @Override
@@ -78,7 +96,7 @@ public class NavigationFragment extends Fragment {
             if (currentPolyline != null)
                 currentPolyline.remove();
             currentPolyline = gMap.addPolyline((PolylineOptions) values[0]);
-            currentPolyline.setColor(getContext().getResources().getColor(R.color.red_a100));
+            currentPolyline.setColor(getContext().getResources().getColor(R.color.red_a400));
         }
     };
 
@@ -104,6 +122,11 @@ public class NavigationFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 //When map is loaded
                 gMap = googleMap;
+                markerManager = new MarkerManager(gMap);
+                groundOverlayManager = new GroundOverlayManager(gMap);
+                polygonManager = new PolygonManager(gMap);
+                polylineManager = new PolylineManager(gMap);
+
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -130,7 +153,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_YELLOW, true);
+                                CreateLayer(response, layerType.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -138,7 +161,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_GREEN, true);
+                                CreateLayer(response, layerType.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
@@ -146,7 +169,7 @@ public class NavigationFragment extends Fragment {
                         new APIListener() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                CreateLayer(response, BitmapDescriptorFactory.HUE_ORANGE, true);
+                                CreateLayer(response, layerType.layer_HawkerCentre, BitmapDescriptorFactory.HUE_ORANGE, true);
                             }
                         });
             }
@@ -156,13 +179,13 @@ public class NavigationFragment extends Fragment {
         return view;
     }
 
-    private void CreateLayer(JSONObject obj, float color, boolean displayOnCreate)
+    private void CreateLayer(JSONObject obj, layerType layerType, float color, boolean displayOnCreate)
     {
         if (gMap == null)
             return;
 
-        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj);
-        markersLayers.add(layer);
+        GeoJsonLayer layer = new GeoJsonLayer(gMap, obj, markerManager, polygonManager, polylineManager, groundOverlayManager);
+        markersLayers.put(layerType, layer);
 
         GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
         pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker(color));
@@ -171,7 +194,6 @@ public class NavigationFragment extends Fragment {
             @Override
             public void onFeatureClick(Feature feature) {
                 GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
-                Toast.makeText(getContext(), "Position is: " + point.getCoordinates().toString(), Toast.LENGTH_LONG).show();
 
                 String url = getUrl(userLocation, point.getCoordinates(), "walking");
                 new FetchURL(callback).execute(url, "walking");
