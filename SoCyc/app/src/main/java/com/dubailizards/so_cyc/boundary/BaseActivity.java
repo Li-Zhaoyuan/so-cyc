@@ -3,22 +3,25 @@ package com.dubailizards.so_cyc.boundary;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.dubailizards.so_cyc.R;
+import com.dubailizards.so_cyc.boundary.navigation.NavigationFragment;
+import com.dubailizards.so_cyc.boundary.navigation.directionhelpers.TaskLoadedCallback;
 import com.dubailizards.so_cyc.databinding.ActivityBaseBinding;
 import com.dubailizards.so_cyc.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 
 /**
  *  Boundary Class, UI that updates based on bottom navigation bar
  *  Loads screen Fragments depending on the pressed button of navigation bar
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements TaskLoadedCallback {
 
     /**
      *  private ActivityBaseBinding variable
@@ -48,5 +51,13 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+//        System.out.println("Hello");
+//        FragmentManager manager = getSupportFragmentManager();
+//        NavigationFragment fragment = (NavigationFragment) manager.findFragmentById(R.id.);
+//        fragment.onTaskDone();
     }
 }
