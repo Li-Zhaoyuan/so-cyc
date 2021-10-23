@@ -60,8 +60,8 @@ public class PublicEventFragment extends Fragment {
         // Initiallize event detail list
         eventDetailsList = new ArrayList<EventDetails>();
 
-        // Draw public events
-        DisplayEventDetails();
+        // Get public events then draw the public events
+        GetPublicEventList();
         return view;
     }
 
@@ -93,6 +93,8 @@ public class PublicEventFragment extends Fragment {
                                 EventDetails ed = document.toObject(EventDetails.class);
                                 eventDetailsList.add(ed);
                             }
+                            // Display event list
+                            DisplayEventDetails();
                         } else {
                             Log.d("DatabaseManager", "Error getting documents: ", task.getException());
                         }
@@ -108,7 +110,7 @@ public class PublicEventFragment extends Fragment {
      */
     private void DisplayEventDetails(){
         // Get the events that this user has joined from the DB
-        GetPublicEventList();
+        //GetPublicEventList();
         // From the list of events generate the rows for the listview
         ListView lv = view.findViewById(R.id.list_publiclist);
 
