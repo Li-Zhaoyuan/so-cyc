@@ -118,23 +118,23 @@ public class EventDetails {
      */
     public boolean CheckValidity(){
         // If any are null return false
-        if (eventHostID == null)
+        if (eventHostID == null || eventHostID.isEmpty())
             return false;
-        if (hostDisplayName == null)
+        if (hostDisplayName == null || hostDisplayName.isEmpty())
             return false;
-        if (profilePictureURL == null)
+        if (profilePictureURL == null || profilePictureURL.isEmpty())
             return false;
-        if (eventTitle == null)
+        if (eventTitle == null || eventTitle.isEmpty())
             return false;
-        if (eventAddress == null)
+        if (eventAddress == null || eventAddress.isEmpty())
             return false;
-        if (eventDate == null)
+        if (eventDate == null || eventDate.isEmpty())
             return false;
-        if (eventDescription == null)
+        if (eventDescription == null || eventDescription.isEmpty())
             return false;
-        if (eventStartTime == null)
+        if (eventStartTime == null || eventStartTime.isEmpty())
             return false;
-        if (eventEndTime == null)
+        if (eventEndTime == null || eventEndTime.isEmpty())
             return false;
         return true;
     }

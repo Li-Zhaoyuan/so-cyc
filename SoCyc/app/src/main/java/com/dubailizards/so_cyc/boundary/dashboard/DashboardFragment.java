@@ -63,7 +63,7 @@ public class DashboardFragment extends Fragment {
         // Setup Host Event Button
         // Get the view where UI entities are stored
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        // Initiallize event detail list
+        // Initialize event detail list
         eventDetailsList = new ArrayList<EventDetails>();
 
         // Set up my entities in the view
@@ -157,11 +157,37 @@ public class DashboardFragment extends Fragment {
                                 eventDetailsList.add(ed);
                             }
                             GetJoinedEventList(); // Get the list of joined events
+                            SetupHostManageButtons(); // Setup buttons
                         } else {
                             Log.d("DatabaseManager", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+    }
+
+    /**
+     *  private void function, Shows/Hides buttons based on whether user has made an event
+     *  On call, check if user has made an event. If they have, hide the Host Event button.
+     */
+    private void SetupHostManageButtons(){
+        boolean hasUserMadeEvent = false;
+        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        // Check if the user has made an event before
+        List<EventDetails> joinedEvents = new ArrayList<EventDetails>();
+        for (EventDetails event : eventDetailsList) {
+            if (fbuser.getUid().equals(event.getEventHostID())){
+                hasUserMadeEvent = true;
+                break;
+            }
+        }
+        if (hasUserMadeEvent == true){
+            view.findViewById(R.id.btn_hostevent).setVisibility(View.GONE);
+            view.findViewById(R.id.btn_manageevent).setVisibility(View.VISIBLE);
+        }
+        else {
+            view.findViewById(R.id.btn_hostevent).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.btn_manageevent).setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -175,30 +201,17 @@ public class DashboardFragment extends Fragment {
             return; // Didn't join any
 
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
-        boolean hasUserMadeEvent = false;
 
         // Find the events that the user has joined put them in a list
         List<EventDetails> joinedEvents = new ArrayList<EventDetails>();
         for (String join : joined){
             for (EventDetails event : eventDetailsList){
-                Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
                 if (event.getEventHostID().equals(join)){
                     //Log.d("Check Join: ", "HIT");
                     joinedEvents.add(event);
                 }
                 //Log.d("Check Join: ", "Miss " + event.getEventHostID() + " vs " + join);
-                // Extra
-                if (fbuser.getUid() == event.getEventHostID())
-                    hasUserMadeEvent = true;
             }
-        }
-        if (!hasUserMadeEvent){
-            view.findViewById(R.id.btn_hostevent).setVisibility(View.GONE);
-            view.findViewById(R.id.btn_manageevent).setVisibility(View.VISIBLE);
-        }
-        else {
-            view.findViewById(R.id.btn_hostevent).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.btn_manageevent).setVisibility(View.GONE);
         }
 
         ListView lv = view.findViewById(R.id.list_dashboardlist);
@@ -207,8 +220,7 @@ public class DashboardFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  // TODO Row press logic to open event details UI
-                  Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(getActivity().getApplicationContext(), "Row "+ position, Toast.LENGTH_SHORT).show();
                   DisplayEventDetailUI(joinedEvents.get(position));
               }
         });

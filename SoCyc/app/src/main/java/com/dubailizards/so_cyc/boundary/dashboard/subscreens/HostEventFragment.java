@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
+import com.dubailizards.so_cyc.boundary.dashboard.DashboardFragment;
 import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -80,6 +81,15 @@ public class HostEventFragment extends Fragment {
     }
 
     /**
+     *  private void function, Returns to dashboard fragment
+     *  When called, open the DashboardFragment
+     */
+    private void DisplayDashboardUI(){
+        DashboardFragment n = new DashboardFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+    }
+
+    /**
      *  private void function, Creates an event on the database
      *  On call, update the server that the current user is hosting an event
      *  Get event details from the UI fields and update the local EventDetails
@@ -117,11 +127,12 @@ public class HostEventFragment extends Fragment {
 
         // Failed the validity check
         if (!details.CheckValidity()){
-            Toast.makeText(getActivity().getApplicationContext(), "Invalid Inputs Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields!", Toast.LENGTH_SHORT).show();
             return;
         }
         // Push to server if inputs valid
         DatabaseManager.GetInstance().AddData("EventDetails", fbuser.getUid(), details);
+        Toast.makeText(getActivity().getApplicationContext(), "Event Created!", Toast.LENGTH_SHORT).show();
 
         DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -145,5 +156,7 @@ public class HostEventFragment extends Fragment {
                 }
             }
         });
+        // Return to dashboard on success
+        DisplayDashboardUI();
     }
 }

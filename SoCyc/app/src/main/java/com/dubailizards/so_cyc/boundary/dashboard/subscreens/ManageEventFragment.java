@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
+import com.dubailizards.so_cyc.boundary.dashboard.DashboardFragment;
 import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -55,6 +56,7 @@ public class ManageEventFragment extends Fragment {
         //super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_manageevent, container, false);
         ((BaseActivity)getActivity()).setActionBarTitle("Manage Event"); // Rename the title
+
         // Initiallize Event Details Object
         details = new EventDetails();
 
@@ -87,14 +89,25 @@ public class ManageEventFragment extends Fragment {
     }
 
     /**
+     *  private void function, Returns to dashboard fragment
+     *  When called, open the DashboardFragment
+     */
+    private void DisplayDashboardUI(){
+        DashboardFragment n = new DashboardFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+    }
+
+    /**
      *  private void function, Updates the server to delete this event detail
      *  On call, update the server that the event the current user is hosting is to be deleted
      *  Delete the event on the server that is tied to this user's ID
      */
     private void DeleteEventData() {
-        // TODO: Delete the current user's event
         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseManager.GetInstance().DeleteData("EventDetails", fbuser.getUid());
+        Toast.makeText(getActivity().getApplicationContext(), "Event Deleted!", Toast.LENGTH_SHORT).show();
+        // Return to dashboard on success
+        DisplayDashboardUI();
     }
 
     /**
@@ -105,7 +118,7 @@ public class ManageEventFragment extends Fragment {
     private void UpdateEventData(){
         // Get data from fields
         // Name
-        EditText text = view.findViewById(R.id.txt_MEEventName);
+        EditText text = view.findViewById(R.id.txtField_MEEventName);
         details.setEventTitle(text.getText().toString());
         // Location
         text = view.findViewById(R.id.txtField_MEEventLocation);
@@ -134,11 +147,12 @@ public class ManageEventFragment extends Fragment {
 
         // Failed the validity check
         if (!details.CheckValidity()){
-            Toast.makeText(getActivity().getApplicationContext(), "Invalid Inputs Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields!", Toast.LENGTH_SHORT).show();
             return;
         }
         // Push to server if inputs valid
         DatabaseManager.GetInstance().AddData("EventDetails", fbuser.getUid(), details);
+        Toast.makeText(getActivity().getApplicationContext(), "Event Updated!", Toast.LENGTH_SHORT).show();
 
         DocumentReference ref = DatabaseManager.GetInstance().GetFireStore().collection("JoinedEvent").document(fbuser.getUid());
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -162,5 +176,7 @@ public class ManageEventFragment extends Fragment {
                 }
             }
         });
+        // Return to dashboard on success
+        DisplayDashboardUI();
     }
 }
