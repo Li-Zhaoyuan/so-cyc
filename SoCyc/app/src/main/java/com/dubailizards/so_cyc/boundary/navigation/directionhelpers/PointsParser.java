@@ -19,9 +19,6 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
     String directionMode = "driving";
 
     public PointsParser(TaskLoadedCallback callback, String directionMode) {
-        System.out.println("hi");
-        System.out.println(callback.getClass());
-        System.out.println("bye");
         this.taskCallback = callback;
         this.directionMode = directionMode;
     }
