@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
@@ -131,6 +132,8 @@ public class PublicEventFragment extends Fragment {
     private void DisplayEventDetailUI(EventDetails ed){
         EventDetailFragment n = new EventDetailFragment();
         n.SetEventDetails(ed);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(R.id.nav_host_fragment_activity_main, n, n.getTag()).addToBackStack(null).commit();
     }
 }

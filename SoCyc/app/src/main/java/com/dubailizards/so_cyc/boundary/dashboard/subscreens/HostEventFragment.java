@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
@@ -86,7 +87,9 @@ public class HostEventFragment extends Fragment {
      */
     private void DisplayDashboardUI(){
         DashboardFragment n = new DashboardFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**
