@@ -21,7 +21,7 @@
 
     <EditText
         android:id="@+id/txtField_MEEventName"
-        android:layout_width="0"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Event Name"
@@ -45,7 +45,7 @@
 
     <EditText
         android:id="@+id/txtField_MEEventLocation"
-        android:layout_width="0"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Event Address"
@@ -113,7 +113,7 @@
 
     <EditText
         android:id="@+id/txtField_MEDescription"
-        android:layout_width="0"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Event Description"
