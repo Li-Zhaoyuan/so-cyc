@@ -12,13 +12,6 @@ import com.dubailizards.so_cyc.boundary.login.LoginActivity;
  *  Transitions to next screen on launch, enables a splash screen if required
  */
 public class MainActivity extends AppCompatActivity {
-
-    /**
-     *  private ActivityMainBinding variable
-     *  Auto generated class type that represents the binding between XML layout file and data objects
-     */
-    private ActivityMainBinding binding;
-
     /**
      *  protected void function, Overridden Constructor of an Activity
      *  Initializes the activity, and sets up necessary parameters

@@ -9,6 +9,41 @@
     tools:context=".boundary.dashboard.DashboardFragment">
 
     <TextView
+        android:id="@+id/txt_host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Host: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_hosticon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_user_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_host"
+        app:layout_constraintStart_toEndOf="@+id/txt_host"
+        app:layout_constraintTop_toTopOf="@+id/txt_host"></ImageView>
+
+    <TextView
+        android:id="@+id/txt_hostName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:text="Host Name"
+        app:layout_constraintBottom_toBottomOf="@+id/img_hosticon"
+        app:layout_constraintStart_toEndOf="@+id/img_hosticon"
+        app:layout_constraintTop_toTopOf="@+id/img_hosticon"></TextView>
+
+    <TextView
         android:id="@+id/txt_EDEventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +53,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_host" />
 
     <EditText
         android:id="@+id/txtField_EDEventName"
