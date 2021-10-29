@@ -3,6 +3,7 @@ package com.dubailizards.so_cyc.boundary;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.dubailizards.so_cyc.databinding.ActivityMainBinding;
 import com.dubailizards.so_cyc.boundary.login.LoginActivity;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(binding.getRoot());
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         // Insert splash screen here
 
         // Transit to login
