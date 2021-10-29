@@ -65,16 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
-
-        // Find my map test button
-        Button Btn_MapTest = findViewById(R.id.map_test);
-        // Link this button with a listener to transit screens if clicked
-        Btn_MapTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwitchActivities(0);
-            }
-        });
     }
 
     /**

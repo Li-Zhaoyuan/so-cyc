@@ -6,20 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.dubailizards.so_cyc.R;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
 import com.dubailizards.so_cyc.boundary.dashboard.DashboardFragment;
 import com.dubailizards.so_cyc.control.DatabaseManager;
 import com.dubailizards.so_cyc.entity.EventDetails;
-import com.dubailizards.so_cyc.entity.UserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -134,17 +135,6 @@ public class EventDetailFragment extends Fragment {
     }
 
     /**
-     *  private void function, Returns to dashboard fragment
-     *  When called, open the DashboardFragment
-     */
-    private void DisplayDashboardUI(){
-        DashboardFragment n = new DashboardFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(0,0);
-        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
-    }
-
-    /**
      *  public void function, sets the local EventDetails
      * @param event is the passed EventDetails object
      *  When called, set the internal details object to the passed one
@@ -172,8 +162,13 @@ public class EventDetailFragment extends Fragment {
             view.findViewById(R.id.btn_EDleave).setVisibility(View.GONE);
             view.findViewById(R.id.btn_EDjoin).setVisibility(View.VISIBLE);
         }
-
         // Setup event details
+        // Host Stuff
+        ImageView img = view.findViewById(R.id.img_hosticon);
+        TextView txt = view.findViewById(R.id.txt_hostName);
+        Glide.with(getContext()).load(event.getProfilePictureURL()).into(img);
+        txt.setText(event.getHostDisplayName());
+
         // Name
         EditText text = view.findViewById(R.id.txtField_EDEventName);
         text.setText(event.getEventTitle());
@@ -195,6 +190,17 @@ public class EventDetailFragment extends Fragment {
         text = view.findViewById(R.id.txtField_EDDescription);
         text.setText(event.getEventDescription());
 
+    }
+
+    /**
+     *  private void function, Returns to dashboard fragment
+     *  When called, open the DashboardFragment
+     */
+    private void DisplayDashboardUI(){
+        DashboardFragment n = new DashboardFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(0,0);
+        transaction.replace(this.getId(), n, n.getTag()).addToBackStack(null).commit();
     }
 
     /**

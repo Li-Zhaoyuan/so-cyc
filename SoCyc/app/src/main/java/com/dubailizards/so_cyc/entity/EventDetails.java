@@ -2,6 +2,10 @@ package com.dubailizards.so_cyc.entity;
 
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EventDetails {
     String eventHostID;
     String hostDisplayName;
@@ -116,27 +120,50 @@ public class EventDetails {
      * A public boolean function
      * On call, checks validity of the EventDetail object by making sure all fields are set
      */
-    public boolean CheckValidity(){
+    public String CheckValidity(){
         // If any are null return false
         if (eventHostID == null || eventHostID.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (hostDisplayName == null || hostDisplayName.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (profilePictureURL == null || profilePictureURL.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (eventTitle == null || eventTitle.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (eventAddress == null || eventAddress.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (eventDate == null || eventDate.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (eventDescription == null || eventDescription.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (eventStartTime == null || eventStartTime.isEmpty())
-            return false;
+            return "Please fill up all fields!";
         if (eventEndTime == null || eventEndTime.isEmpty())
-            return false;
-        return true;
+            return "Please fill up all fields!";
+
+        SimpleDateFormat sdfrmt = new SimpleDateFormat("dd/MM/yy");
+        sdfrmt.setLenient(false);
+        try {
+            Date javaDate = sdfrmt.parse(eventDate);
+        }catch (ParseException e)
+        {
+            return "Please fill up the date as dd/MM/yy!";
+        }
+
+        try {
+            int startTime = Integer.parseInt(eventStartTime);
+            int endTime = Integer.parseInt(eventEndTime);
+
+            if (startTime > 2359 || endTime > 2359)
+                return "Please fill up a Time from 0000 to 2359!";
+            if (startTime % 100 > 59 || endTime % 100 > 59)
+                return "Please fill up a Time with minutes between 0 to 59!";
+        }
+        catch(NumberFormatException e)
+        {
+            return "Please fill up a Time from 0000 to 2359!";
+        }
+        return "";
     }
 
     /**

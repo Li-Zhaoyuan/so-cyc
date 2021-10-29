@@ -80,6 +80,7 @@ public class NavigationFragment extends Fragment {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 23;
 
+
     private Polyline currentPolyline;
 
     private ImageButton btnPark;
@@ -92,6 +93,7 @@ public class NavigationFragment extends Fragment {
     PolygonManager polygonManager;
     PolylineManager polylineManager;
     LatLng userLocation;
+    LatLng destination;
 
     HashMap<LAYERTYPE, GeoJsonLayer> markersLayers = new HashMap<LAYERTYPE, GeoJsonLayer>();
 
@@ -147,6 +149,12 @@ public class NavigationFragment extends Fragment {
                     @Override
                     public void onMyLocationChange(Location location) {
                         userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+                        if (destination != null) {
+                            String url = getUrl(userLocation, destination, "walking");
+                            new FetchURL(callback).execute(url, "walking");
+                        }
+
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                 userLocation, 15);
                         gMap.animateCamera(cameraUpdate);

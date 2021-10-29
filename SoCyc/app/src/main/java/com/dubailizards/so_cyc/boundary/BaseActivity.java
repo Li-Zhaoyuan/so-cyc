@@ -49,6 +49,10 @@ public class BaseActivity extends AppCompatActivity{
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    /**
+     *  public void function, sets the action bar title to passed string
+     *  @param title is the new title of the action bar
+     */
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
