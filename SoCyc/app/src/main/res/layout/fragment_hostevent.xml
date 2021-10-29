@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:maxLength="8"
-        android:hint="DD/MM/YY"
+        android:hint="DDMMYY"
         android:inputType="date"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/txt_HEEventDateTime"
