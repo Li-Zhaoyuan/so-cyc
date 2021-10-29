@@ -260,8 +260,15 @@ public class NavigationFragment extends Fragment {
             public void onFeatureClick(Feature feature) {
                 GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
 
-                String url = getUrl(userLocation, point.getCoordinates(), "walking");
-                new FetchURL(callback).execute(url, "walking");
+                if (gMap.getMyLocation() != null)
+                {
+                    String url = getUrl(userLocation, point.getCoordinates(), "walking");
+                    new FetchURL(callback).execute(url, "walking");
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Unable to find your location", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
