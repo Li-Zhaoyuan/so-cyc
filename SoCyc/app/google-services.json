@@ -7,43 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1009243384429:android:8738867f064a7264422d64",
-        "android_client_info": {
-          "package_name": "com.DubaiLizards.so_cyc"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1009243384429-i4r1fn5v7vus9m3ssnti5e3tlkvevto7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.DubaiLizards.so_cyc",
-            "certificate_hash": "fc3316864f446908ea1cf13da9b4a7c8b3acfe0f"
-          }
-        },
-        {
-          "client_id": "1009243384429-jdq37mb9iubo2r2k3c0psh8tqnttlco1.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC89Scm4dxJwTswavsj704G8LXHnwtRxNg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1009243384429-jdq37mb9iubo2r2k3c0psh8tqnttlco1.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1009243384429:android:03c7b347ca8beeb3422d64",
         "android_client_info": {
           "package_name": "com.dubailizards.so_cyc"
@@ -51,11 +14,59 @@
       },
       "oauth_client": [
         {
-          "client_id": "1009243384429-2esf8joqd5ukb05sosejts8c4tbeiebm.apps.googleusercontent.com",
+          "client_id": "1009243384429-1fqg0p3sv94gvpj5htr55veh7bbbu2lr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dubailizards.so_cyc",
+            "certificate_hash": "0cff5ec6332bcafa62cfcec8b4f6a11c91f7e4da"
+          }
+        },
+        {
+          "client_id": "1009243384429-867293rs5iu7a3al84gbbi8kht3g4lte.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dubailizards.so_cyc",
+            "certificate_hash": "0971eb4ee40d5e6f5a284f7111a6fff9c1e1f0ad"
+          }
+        },
+        {
+          "client_id": "1009243384429-d929u9osk6bb5jg09t07ni1ft1eocked.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dubailizards.so_cyc",
+            "certificate_hash": "7d9ac98a81ac6fb4092bd63bbfdddbb566fa3c88"
+          }
+        },
+        {
+          "client_id": "1009243384429-f86r0g9eq83snq7o2rj990jff6s48n0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dubailizards.so_cyc",
+            "certificate_hash": "c41a1723823568b708271ed2bcd28ca22b424273"
+          }
+        },
+        {
+          "client_id": "1009243384429-kd3e491kv67fkitcgaljcvi3pamlokq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dubailizards.so_cyc",
+            "certificate_hash": "51e8751e89b7682b079d67e75befeac3f0f8b9d9"
+          }
+        },
+        {
+          "client_id": "1009243384429-lnbl8dk41dog5gmk724718lme665sqa8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dubailizards.so_cyc",
             "certificate_hash": "fc3316864f446908ea1cf13da9b4a7c8b3acfe0f"
+          }
+        },
+        {
+          "client_id": "1009243384429-p5e2i6u14ae8hk93rgifascirtjc6rlc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dubailizards.so_cyc",
+            "certificate_hash": "d21cef5b9fef806da36eb4088df58a16f1f4a4ca"
           }
         },
         {
