@@ -42,7 +42,6 @@
         </activity>
         <activity android:name=".boundary.login.LoginActivity"></activity>
         <activity android:name=".boundary.BaseActivity"></activity>
-        <activity android:name=".boundary.TestingActivity"></activity>
 
     </application>
 
