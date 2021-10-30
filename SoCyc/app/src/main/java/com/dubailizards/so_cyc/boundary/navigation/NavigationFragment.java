@@ -119,21 +119,18 @@ public class NavigationFragment extends Fragment {
                 polylineManager = new PolylineManager(gMap);
 
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 gMap.setMyLocationEnabled(true);
                 gMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                    //Function will be called when user's location changed
                     @Override
                     public void onMyLocationChange(Location location) {
+                        //Get user's new location
                         userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
+                        //If destination is set to null means that user have not choose a marker to navigate to
+                        //thus no need for the calling of FetchURL function to be called sine no update to route
                         if (destination != null) {
                             ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                             NetworkInfo nInfo = cm.getActiveNetworkInfo();
@@ -146,6 +143,7 @@ public class NavigationFragment extends Fragment {
                             new FetchURL(callback).execute(url, "walking");
                         }
 
+                        //Map displayed on phone to follow user's new location
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                 userLocation, 15);
                         gMap.animateCamera(cameraUpdate);
@@ -271,6 +269,7 @@ public class NavigationFragment extends Fragment {
             }
         });
 
+        //Function to remove route (if it exists) from google map upon "Clear Path" button being clicked
         btnRemoveLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -329,6 +328,7 @@ public class NavigationFragment extends Fragment {
             layer.addLayerToMap();
     }
 
+    //Function to check if user have given permission to access phone's location
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -339,6 +339,7 @@ public class NavigationFragment extends Fragment {
 
     }
 
+    //Function to construct URL for calling of Google Directions API
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
