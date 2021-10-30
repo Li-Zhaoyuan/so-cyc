@@ -156,6 +156,13 @@ public class NavigationFragment extends Fragment {
                         userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
                         if (destination != null) {
+                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo nInfo = cm.getActiveNetworkInfo();
+                            boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+                            if(connected == false) {
+                                Toast.makeText(getContext(), "No internet connection detected", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             String url = getUrl(userLocation, destination, "walking");
                             new FetchURL(callback).execute(url, "walking");
                         }
