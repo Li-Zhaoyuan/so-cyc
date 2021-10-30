@@ -197,35 +197,53 @@ public class NavigationFragment extends Fragment {
         btnBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(markersLayers.get(LAYERTYPE.layer_BikeRack).isLayerOnMap())
+                if (markersLayers.containsKey(LAYERTYPE.layer_BikeRack))
                 {
-                    btnBike.setBackgroundColor(Color.WHITE);
-                    markersLayers.get(LAYERTYPE.layer_BikeRack).removeLayerFromMap();
+                    if (markersLayers.get(LAYERTYPE.layer_BikeRack).isLayerOnMap()) {
+                        btnBike.setBackgroundColor(Color.WHITE);
+                        markersLayers.get(LAYERTYPE.layer_BikeRack).removeLayerFromMap();
+                    } else {
+                        btnBike.setBackgroundColor(Color.YELLOW);
+                        markersLayers.get(LAYERTYPE.layer_BikeRack).addLayerToMap();
+                    }
                 }
                 else
                 {
-                    btnBike.setBackgroundColor(Color.YELLOW);
-                    markersLayers.get(LAYERTYPE.layer_BikeRack).addLayerToMap();
+                    APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
+                        "https://geo.data.gov.sg/bicyclerack/2021/07/12/geojson/bicyclerack.geojson",
+                        new APIListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                CreateLayer(response, LAYERTYPE.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
+                            }
+                        });
                 }
-
             }
-
         });
 
          btnPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(markersLayers.get(LAYERTYPE.layer_NationalPark).isLayerOnMap())
+                if (markersLayers.containsKey(LAYERTYPE.layer_NationalPark))
                 {
-                    btnPark.setBackgroundColor(Color.WHITE);
-                    markersLayers.get(LAYERTYPE.layer_NationalPark).removeLayerFromMap();
+                    if (markersLayers.get(LAYERTYPE.layer_NationalPark).isLayerOnMap()) {
+                        btnPark.setBackgroundColor(Color.WHITE);
+                        markersLayers.get(LAYERTYPE.layer_NationalPark).removeLayerFromMap();
+                    } else {
+                        btnPark.setBackgroundColor(Color.GREEN);
+                        markersLayers.get(LAYERTYPE.layer_NationalPark).addLayerToMap();
+                    }
                 }
                 else
                 {
-                    btnPark.setBackgroundColor(Color.GREEN);
-                    markersLayers.get(LAYERTYPE.layer_NationalPark).addLayerToMap();
+                    APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
+                            "https://geo.data.gov.sg/nationalparks/2020/04/24/geojson/nationalparks.geojson",
+                            new APIListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    CreateLayer(response, LAYERTYPE.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, false);
+                                }
+                            });
                 }
             }
         });
@@ -233,16 +251,29 @@ public class NavigationFragment extends Fragment {
         btnHawker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(markersLayers.get(LAYERTYPE.layer_HawkerCentre).isLayerOnMap())
+                if (markersLayers.containsKey(LAYERTYPE.layer_HawkerCentre))
                 {
-                    btnHawker.setBackgroundColor(Color.WHITE);
-                    markersLayers.get(LAYERTYPE.layer_HawkerCentre).removeLayerFromMap();
+                    if(markersLayers.get(LAYERTYPE.layer_HawkerCentre).isLayerOnMap())
+                    {
+                        btnHawker.setBackgroundColor(Color.WHITE);
+                        markersLayers.get(LAYERTYPE.layer_HawkerCentre).removeLayerFromMap();
+                    }
+                    else
+                    {
+                        btnHawker.setBackgroundColor(getContext().getResources().getColor(R.color.teal_200));
+                        markersLayers.get(LAYERTYPE.layer_HawkerCentre).addLayerToMap();
+                    }
                 }
                 else
                 {
-                    btnHawker.setBackgroundColor(getContext().getResources().getColor(R.color.teal_200));
-                    markersLayers.get(LAYERTYPE.layer_HawkerCentre).addLayerToMap();
+                    APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
+                            "https://geo.data.gov.sg/hawkercentre/2021/09/01/geojson/hawkercentre.geojson",
+                            new APIListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    CreateLayer(response, LAYERTYPE.layer_HawkerCentre, BitmapDescriptorFactory.HUE_CYAN, false);
+                                }
+                            });
                 }
             }
         });
@@ -255,6 +286,8 @@ public class NavigationFragment extends Fragment {
     private void CreateLayer(JSONObject obj, LAYERTYPE layerType, float color, boolean displayOnCreate)
     {
         if (gMap == null)
+            return;
+        if (markersLayers.containsKey(layerType))
             return;
 
         GeoJsonLayer layer = new GeoJsonLayer(gMap, obj, markerManager, polygonManager, polylineManager, groundOverlayManager);
