@@ -17,8 +17,25 @@ public class EventDetails {
     String eventStartTime;
     String eventEndTime;
 
+    /**
+     * A public Constructor
+     * empty constructor
+     */
     public EventDetails() { }
 
+    /**
+     * A public Constructor
+     * Overloaded Constructor
+     * @param profilePictureURL set profilePictureURL
+     * @param eventTitle set eventTitle
+     * @param eventAddress set eventAddress
+     * @param eventDescription set eventDescription
+     * @param eventHostID set eventHostID
+     * @param eventDate set eventDate
+     * @param eventStartTime set eventStartTime
+     * @param eventEndTime set eventEndTime
+     * @param hostDisplayName set hostDisplayName
+     */
     public EventDetails(String profilePictureURL,
             String eventTitle,
             String eventAddress,
@@ -41,76 +58,148 @@ public class EventDetails {
     }
 
     //Getters
+    /**
+     * A public getter function
+     * get eventHostID
+     */
     public String getEventHostID()
     {
         return eventHostID;
     }
+    /**
+     * A public getter function
+     * get hostDisplayName
+     */
     public String getHostDisplayName()
     {
         return hostDisplayName;
     }
+    /**
+     * A public getter function
+     * get profilePictureURL
+     */
     public String getProfilePictureURL()
     {
         return profilePictureURL;
     }
+    /**
+     * A public getter function
+     * get eventTitle
+     */
     public String getEventTitle()
     {
         return eventTitle;
     }
+    /**
+     * A public getter function
+     * get eventAddress
+     */
     public String getEventAddress()
     {
         return eventAddress;
     }
+    /**
+     * A public getter function
+     * get eventDescription
+     */
     public String getEventDescription()
     {
         return eventDescription;
     }
+    /**
+     * A public getter function
+     * get eventDate
+     */
     public String getEventDate()
     {
         return eventDate;
     }
+    /**
+     * A public getter function
+     * get eventStartTime
+     */
     public String getEventStartTime()
     {
         return eventStartTime;
     }
+    /**
+     * A public getter function
+     * get eventEndTime
+     */
     public String getEventEndTime()
     {
         return eventEndTime;
     }
 
     //Setters
+    /**
+     * A public setter function
+     * @param id set eventHostID
+     */
     public void setEventHostID(String id)
     {
         eventHostID = id;
     }
+    /**
+     * A public setter function
+     * @param name set hostDisplayName
+     */
     public void setHostDisplayName(String name)
     {
         hostDisplayName = name;
     }
+    /**
+     * A public setter function
+     * @param url set profilePictureURL
+     */
     public void setProfilePictureURL(String url)
     {
         profilePictureURL = url;
     }
+    /**
+     * A public setter function
+     * @param title set eventTitle
+     */
     public void setEventTitle(String title)
     {
         eventTitle = title;
     }
+    /**
+     * A public setter function
+     * @param address set eventAddress
+     */
     public void setEventAddress(String address)
     {
         eventAddress = address;
     }
+    /**
+     * A public setter function
+     * @param date set eventDate
+     */
     public void setEventDate(String date)
     {
         eventDate = date;
     }
+    /**
+     * A public setter function
+     * @param description set eventDescription
+     */
     public void setEventDescription(String description)
     {
         eventDescription = description;
     }
+    /**
+     * A public setter function
+     * @param time set eventStartTime
+     */
     public void setEventStartTime(String time)
     {
         eventStartTime = time;
     }
+    /**
+     * A public setter function
+     * @param time set eventEndTime
+     */
     public void setEventEndTime(String time)
     {
         eventEndTime = time;

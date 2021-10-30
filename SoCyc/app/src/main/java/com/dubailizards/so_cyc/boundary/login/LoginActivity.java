@@ -3,7 +3,6 @@ package com.dubailizards.so_cyc.boundary.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dubailizards.so_cyc.boundary.BaseActivity;
 import com.dubailizards.so_cyc.boundary.MainActivity;
 import com.dubailizards.so_cyc.R;
-import com.dubailizards.so_cyc.boundary.TestingActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -79,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                 switchActivityIntent = new Intent(this, BaseActivity.class);
                 break;
             default:
-                switchActivityIntent = new Intent(this, TestingActivity.class);
+                switchActivityIntent = new Intent(this, BaseActivity.class);
                 break;
         }
         startActivity(switchActivityIntent);
