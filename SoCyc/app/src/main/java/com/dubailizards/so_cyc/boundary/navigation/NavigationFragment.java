@@ -1,7 +1,5 @@
 package com.dubailizards.so_cyc.boundary.navigation;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,35 +7,23 @@ import android.location.Location;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.SortedList;
 
-import com.android.volley.VolleyError;
 import com.dubailizards.so_cyc.R;
-import com.dubailizards.so_cyc.boundary.BaseActivity;
-import com.dubailizards.so_cyc.boundary.MainActivity;
 import com.dubailizards.so_cyc.boundary.navigation.directionhelpers.FetchURL;
 import com.dubailizards.so_cyc.boundary.navigation.directionhelpers.TaskLoadedCallback;
-import com.dubailizards.so_cyc.control.APIListener;
 import com.dubailizards.so_cyc.control.APIManager;
-import com.dubailizards.so_cyc.databinding.FragmentNavigationBinding;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,15 +31,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.errorprone.annotations.ForOverride;
 import com.google.maps.android.collections.GroundOverlayManager;
 import com.google.maps.android.collections.MarkerManager;
 import com.google.maps.android.collections.PolygonManager;
 import com.google.maps.android.collections.PolylineManager;
 import com.google.maps.android.data.Feature;
-import com.google.maps.android.data.Layer;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
@@ -62,10 +44,7 @@ import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  *  Boundary Class, Fragment of the BaseActivity UI that represents the Navigation Screen
@@ -175,26 +154,26 @@ public class NavigationFragment extends Fragment {
                 });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                         "https://geo.data.gov.sg/bicyclerack/2021/07/12/geojson/bicyclerack.geojson",
-                        new APIListener() {
+                        new TaskLoadedCallback() {
                             @Override
-                            public void onResponse(JSONObject response) {
-                                CreateLayer(response, LAYERTYPE.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
+                            public void onTaskDone(Object... values) {
+                                CreateLayer((JSONObject)values[0], LAYERTYPE.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                         "https://geo.data.gov.sg/nationalparks/2020/04/24/geojson/nationalparks.geojson",
-                        new APIListener() {
+                        new TaskLoadedCallback() {
                             @Override
-                            public void onResponse(JSONObject response) {
-                                CreateLayer(response, LAYERTYPE.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, false);
+                            public void onTaskDone(Object... values) {
+                                CreateLayer((JSONObject)values[0], LAYERTYPE.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, false);
                             }
                         });
                 APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                         "https://geo.data.gov.sg/hawkercentre/2021/09/01/geojson/hawkercentre.geojson",
-                        new APIListener() {
+                        new TaskLoadedCallback() {
                             @Override
-                            public void onResponse(JSONObject response) {
-                                CreateLayer(response, LAYERTYPE.layer_HawkerCentre, BitmapDescriptorFactory.HUE_CYAN, false);
+                            public void onTaskDone(Object... values) {
+                                CreateLayer((JSONObject)values[0], LAYERTYPE.layer_HawkerCentre, BitmapDescriptorFactory.HUE_CYAN, false);
                             }
                         });
             }
@@ -225,10 +204,10 @@ public class NavigationFragment extends Fragment {
                 {
                     APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                         "https://geo.data.gov.sg/bicyclerack/2021/07/12/geojson/bicyclerack.geojson",
-                        new APIListener() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                CreateLayer(response, LAYERTYPE.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
+                            new TaskLoadedCallback() {
+                                @Override
+                                public void onTaskDone(Object... values) {
+                                    CreateLayer((JSONObject)values[0], LAYERTYPE.layer_BikeRack, BitmapDescriptorFactory.HUE_YELLOW, true);
                             }
                         });
                 }
@@ -252,10 +231,10 @@ public class NavigationFragment extends Fragment {
                 {
                     APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                             "https://geo.data.gov.sg/nationalparks/2020/04/24/geojson/nationalparks.geojson",
-                            new APIListener() {
+                            new TaskLoadedCallback() {
                                 @Override
-                                public void onResponse(JSONObject response) {
-                                    CreateLayer(response, LAYERTYPE.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, false);
+                                public void onTaskDone(Object... values) {
+                                    CreateLayer((JSONObject)values[0], LAYERTYPE.layer_NationalPark, BitmapDescriptorFactory.HUE_GREEN, false);
                                 }
                             });
                 }
@@ -282,10 +261,10 @@ public class NavigationFragment extends Fragment {
                 {
                     APIManager.getInstance(getActivity()).RequestJSONObject(getActivity(),
                             "https://geo.data.gov.sg/hawkercentre/2021/09/01/geojson/hawkercentre.geojson",
-                            new APIListener() {
+                            new TaskLoadedCallback() {
                                 @Override
-                                public void onResponse(JSONObject response) {
-                                    CreateLayer(response, LAYERTYPE.layer_HawkerCentre, BitmapDescriptorFactory.HUE_CYAN, false);
+                                public void onTaskDone(Object... values) {
+                                    CreateLayer((JSONObject)values[0], LAYERTYPE.layer_HawkerCentre, BitmapDescriptorFactory.HUE_CYAN, false);
                                 }
                             });
                 }

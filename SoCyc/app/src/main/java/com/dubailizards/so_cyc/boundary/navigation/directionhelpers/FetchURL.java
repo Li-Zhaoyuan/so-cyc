@@ -13,8 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class FetchURL extends AsyncTask<String, Void, String> {
-    TaskLoadedCallback callback;
-    String directionMode = "driving";
+    private TaskLoadedCallback callback;
+    private String directionMode = "driving";
 
     public FetchURL(TaskLoadedCallback callback) {
         this.callback = callback;

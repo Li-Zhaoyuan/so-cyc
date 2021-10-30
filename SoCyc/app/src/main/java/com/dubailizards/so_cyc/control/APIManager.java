@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dubailizards.so_cyc.boundary.MainActivity;
+import com.dubailizards.so_cyc.boundary.navigation.directionhelpers.TaskLoadedCallback;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -59,14 +60,14 @@ public class APIManager {
     }
 
 
-    public void RequestJSONObject(Context context, String url, final APIListener listener)
+    public void RequestJSONObject(Context context, String url, final TaskLoadedCallback listener)
     {
         // Request a string response from the provided URL.
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        listener.onResponse(response);
+                        listener.onTaskDone(response);
                     }
                 },
                 new Response.ErrorListener() {
