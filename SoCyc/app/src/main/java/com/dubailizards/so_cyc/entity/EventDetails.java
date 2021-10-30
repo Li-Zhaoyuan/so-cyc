@@ -141,13 +141,13 @@ public class EventDetails {
         if (eventEndTime == null || eventEndTime.isEmpty())
             return "Please fill up all fields!";
 
-        SimpleDateFormat sdfrmt = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat sdfrmt = new SimpleDateFormat("ddMMyy");
         sdfrmt.setLenient(false);
         try {
             Date javaDate = sdfrmt.parse(eventDate);
         }catch (ParseException e)
         {
-            return "Please fill up the date as dd/MM/yy!";
+            return "Please fill up the date as DDMMYY!";
         }
 
         try {
