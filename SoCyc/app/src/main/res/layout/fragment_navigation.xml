@@ -69,6 +69,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01" />
 
+    <Button
+        android:id="@+id/remove_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="161dp"
+        android:layout_marginBottom="10dp"/>
+
     // Toggle markers
 
 

@@ -87,6 +87,8 @@ public class NavigationFragment extends Fragment {
     private ImageButton btnBike;
     private ImageButton btnHawker;
 
+    private Button btnRemoveLine;
+
     GoogleMap gMap = null;
     MarkerManager markerManager;
     GroundOverlayManager groundOverlayManager;
@@ -188,6 +190,8 @@ public class NavigationFragment extends Fragment {
             }
         });
 
+        btnRemoveLine = view.findViewById(R.id.remove_line);
+
         btnBike = (ImageButton) view.findViewById(R.id.toggle_bike);;
         btnPark = (ImageButton) view.findViewById(R.id.toggle_park);;
         btnHawker = (ImageButton) view.findViewById(R.id.toggle_hawker);;
@@ -277,6 +281,16 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
+
+        btnRemoveLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentPolyline != null)
+                    currentPolyline.remove();
+                    destination = null;
+            }
+        });
+
 
 
         //Return view
