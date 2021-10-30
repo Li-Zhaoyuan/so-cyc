@@ -1,6 +1,7 @@
 package com.dubailizards.so_cyc.boundary.navigation.directionhelpers;
 
 import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Log;
 

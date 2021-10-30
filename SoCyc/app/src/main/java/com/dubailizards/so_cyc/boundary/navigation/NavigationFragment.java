@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,6 +156,13 @@ public class NavigationFragment extends Fragment {
                         userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
                         if (destination != null) {
+                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo nInfo = cm.getActiveNetworkInfo();
+                            boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+                            if(connected == false) {
+                                Toast.makeText(getContext(), "No internet connection detected", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             String url = getUrl(userLocation, destination, "walking");
                             new FetchURL(callback).execute(url, "walking");
                         }
@@ -313,6 +323,14 @@ public class NavigationFragment extends Fragment {
         layer.setOnFeatureClickListener(new GeoJsonLayer.GeoJsonOnFeatureClickListener() {
             @Override
             public void onFeatureClick(Feature feature) {
+                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo nInfo = cm.getActiveNetworkInfo();
+                boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+                if(connected == false) {
+                    Toast.makeText(getContext(), "No internet connection detected", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 GeoJsonPoint point = (GeoJsonPoint)feature.getGeometry();
 
                 if (gMap.getMyLocation() != null)
