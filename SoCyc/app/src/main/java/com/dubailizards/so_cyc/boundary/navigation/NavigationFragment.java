@@ -303,7 +303,8 @@ public class NavigationFragment extends Fragment {
 
                 if (gMap.getMyLocation() != null)
                 {
-                    String url = getUrl(userLocation, point.getCoordinates(), "walking");
+                    destination = point.getCoordinates();
+                    String url = getUrl(userLocation, destination, "walking");
                     new FetchURL(callback).execute(url, "walking");
                 }
                 else
