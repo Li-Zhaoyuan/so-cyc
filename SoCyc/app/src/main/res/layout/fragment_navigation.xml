@@ -28,46 +28,56 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="82dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageButton
         android:id="@+id/toggle_bike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         android:background="@color/white"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_bike"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintTop_toTopOf="parent">
+    </ImageButton>
+
 
     <ImageButton
         android:id="@+id/toggle_hawker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@color/white"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_hawker"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/toggle_bike"
+        app:layout_constraintStart_toStartOf="@+id/toggle_bike"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_bike" />
 
     <ImageButton
         android:id="@+id/toggle_park"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_park"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/toggle_hawker"
+        app:layout_constraintStart_toStartOf="@+id/toggle_hawker"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_hawker" />
+
+    <Button
+        android:id="@+id/remove_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/ic_park"
+        android:layout_marginBottom="10dp"
+        android:text="Clear Path"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     // Toggle markers
 
