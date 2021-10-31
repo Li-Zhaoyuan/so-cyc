@@ -52,6 +52,10 @@ import java.util.HashMap;
  */
 public class NavigationFragment extends Fragment {
 
+    /**
+     * a private enum variable.
+     * Represents the different types of layers the map can have
+     */
     private enum LAYERTYPE{
         layer_BikeRack,
         layer_NationalPark,
@@ -61,27 +65,35 @@ public class NavigationFragment extends Fragment {
     }
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 23;
-
-
+    /**
+     * a private Polyline variable.
+     * Holds latest path found, decided by user when markers are tapped on.
+     */
     private Polyline currentPolyline;
 
     private ImageButton btnPark;
     private ImageButton btnBike;
     private ImageButton btnHawker;
-
     private Button btnRemoveLine;
 
-    GoogleMap gMap = null;
-    MarkerManager markerManager;
-    GroundOverlayManager groundOverlayManager;
-    PolygonManager polygonManager;
-    PolylineManager polylineManager;
-    LatLng userLocation;
-    LatLng destination;
+    private GoogleMap gMap = null;
+    private MarkerManager markerManager;
+    private GroundOverlayManager groundOverlayManager;
+    private PolygonManager polygonManager;
+    private PolylineManager polylineManager;
+    private LatLng userLocation;
+    private LatLng destination;
 
-    HashMap<LAYERTYPE, GeoJsonLayer> markersLayers = new HashMap<LAYERTYPE, GeoJsonLayer>();
-
-    TaskLoadedCallback callback = new TaskLoadedCallback() {
+    /**
+     * a private HashMap<LAYERTYPE, GeoJsonLayer> variable.
+     * Holds all markers data to be used to overlay the google map
+     */
+    private HashMap<LAYERTYPE, GeoJsonLayer> markersLayers = new HashMap<LAYERTYPE, GeoJsonLayer>();
+    /**
+     * a private TaskLoadedCallback variable.
+     * Used to store the method used to draw path found on google map. This variable will be used as parameter passed into async functions to be called afterwards.
+     */
+    private TaskLoadedCallback pathFoundCallback = new TaskLoadedCallback() {
         @Override
         public void onTaskDone(Object... values) {
             if (currentPolyline != null)
@@ -94,6 +106,9 @@ public class NavigationFragment extends Fragment {
     /**
      *  protected void function, Overridden Constructor of a Fragment
      *  Initializes the Fragment, and sets up necessary parameters
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -140,7 +155,7 @@ public class NavigationFragment extends Fragment {
                                 return;
                             }
                             String url = getUrl(userLocation, destination, "walking");
-                            new FetchURL(callback).execute(url, "walking");
+                            new FetchURL(pathFoundCallback).execute(url, "walking");
                         }
 
                         //Map displayed on phone to follow user's new location
@@ -284,7 +299,14 @@ public class NavigationFragment extends Fragment {
         //Return view
         return view;
     }
-
+    /**
+     * a private void function, a common set of instruction created to reduce repititions in this class
+     * Adds data in the form of a HashMap<LAYERTYPE, GeoJsonLayer> to the markersLayers local variable
+     * @param obj contains GeoJsonLayer data to be added into markersLayers
+     * @param layerType represents the key for the obj added to the markersLayers
+     * @param color is the desired color for markers contained in obj
+     * @param displayOnCreate flags if current markersLayer should be added as shown or hidden
+     */
     private void CreateLayer(JSONObject obj, LAYERTYPE layerType, float color, boolean displayOnCreate)
     {
         if (gMap == null)
@@ -315,7 +337,7 @@ public class NavigationFragment extends Fragment {
                 {
                     destination = point.getCoordinates();
                     String url = getUrl(userLocation, destination, "walking");
-                    new FetchURL(callback).execute(url, "walking");
+                    new FetchURL(pathFoundCallback).execute(url, "walking");
                 }
                 else
                 {
@@ -328,7 +350,10 @@ public class NavigationFragment extends Fragment {
             layer.addLayerToMap();
     }
 
-    //Function to check if user have given permission to access phone's location
+    /**
+     * a private void function, used to ensure location permission is allowed
+     * will check if location permission is allowed, if not request user for permission
+     */
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -336,10 +361,15 @@ public class NavigationFragment extends Fragment {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
         }
-
     }
 
-    //Function to construct URL for calling of Google Directions API
+    /**
+     * a private string function, returns a string to be used for URL reqeust
+     * constructs a URL for specific requests by appending paramters into required URL format
+     * @param origin user position in LatLng
+     * @param dest user destination in LatLng
+     * @param directionMode determines what kind route to connect origin and dest, inputs include "WALKING", "DRIVING", etc.
+     */
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
